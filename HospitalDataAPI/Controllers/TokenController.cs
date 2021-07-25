@@ -1,9 +1,10 @@
 ﻿using System;
-using HospitalDataAPI.DTO;
+using HospitalDataAPI.Model.DTO;
 using HospitalDataAPI.Service;
 using Microsoft.AspNetCore.Mvc;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.AspNetCore.Authorization;
+
 
 namespace HospitalDataAPI.Controllers
 {
