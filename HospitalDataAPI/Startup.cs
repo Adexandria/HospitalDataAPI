@@ -56,7 +56,7 @@ namespace HospitalDataAPI
             services.AddSingleton<Credentials>();
             services.AddDbContext<DataContext>(opt => 
             {
-                opt.UseSqlServer(Configuration["ConnectionStrings: HospitalDataAPI"]).EnableSensitiveDataLogging();
+                opt.UseSqlServer(Configuration["ConnectionStrings:HospitalDataAPI"]).EnableSensitiveDataLogging();
             });
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddSwaggerGen(setupAction =>
