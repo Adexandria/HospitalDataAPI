@@ -3,6 +3,7 @@
     public enum BirthSex
     {
         Male,
-        Female
+        Female,
+        None
     }
 }

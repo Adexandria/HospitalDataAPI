@@ -4,6 +4,7 @@
     {
         Single,
         Married,
-        Divorced
+        Divorced,
+        None
     }
 }

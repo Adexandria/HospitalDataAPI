@@ -4,6 +4,7 @@
     {
         Black,
         Asian,
-        White
+        White,
+        None
     }
 }
