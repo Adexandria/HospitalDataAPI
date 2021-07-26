@@ -16,9 +16,12 @@ namespace HospitalDataAPI.Service
                 
         }
         public DbSet<Patient> Patient { get; set; }
-        public DbSet<PrescribedMedication> Medication { get; set; }
+        public DbSet<PrescribedMedication> PrescribedMedication { get; set; }
         public DbSet<LabTest> LabTest { get; set; }
         public DbSet<LabResult> LabResult { get; set; }
+        public DbSet<Category> Category { get; set; }
+        public DbSet<Coding> Coding { get; set; }
+        public DbSet<Medication> Medication { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
