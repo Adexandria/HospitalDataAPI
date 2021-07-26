@@ -13,7 +13,7 @@ namespace HospitalDataAPI.Model.MedicationModel
         [Key]
         public Guid MedationId { get; set; }
         public DateTime Date { get; set; }
-        public Status Status { get; set; }
+        public MedicationStatus Status { get; set; }
         public string Prescriber { get; set; }
         public Medication Medication { get; set; }
         [ForeignKey("Patient")]
