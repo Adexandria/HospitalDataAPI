@@ -12,7 +12,7 @@ namespace HospitalDataAPI.Model.LabModel
     {
         [Key]
         public Guid ResultId { get; set; }
-        public Status Status { get; set; }
+        public LabStatus Status { get; set; }
         public ResultCode ResultCode { get; set; }
         public string ResultValue { get; set; }
         public string ReferenceRange { get; set; } = "5.0-8.0";

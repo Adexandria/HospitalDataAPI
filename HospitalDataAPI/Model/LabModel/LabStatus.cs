@@ -1,6 +1,6 @@
 ﻿namespace HospitalDataAPI.Model.LabModel
 {
-    public enum Status
+    public enum LabStatus
     {
         Pending,
         Final

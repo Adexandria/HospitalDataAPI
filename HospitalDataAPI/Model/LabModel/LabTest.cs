@@ -8,7 +8,7 @@ namespace HospitalDataAPI.Model.LabModel
     {
         [Key]
         public Guid TestId { get; set; }
-        public Status Status { get; set; }
+        public LabStatus Status { get; set; }
         public TestCode TestCode { get; set; }
         public DateTime MeasuredTime { get; set; }
         public Category Category { get; set; }
