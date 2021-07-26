@@ -9,9 +9,13 @@ namespace HospitalDataAPI.Model.LabModel
         [Key]
         public Guid TestId { get; set; }
         public LabStatus Status { get; set; }
-        public TestCode TestCode { get; set; }
+        [ForeignKey("TestCode")]
+        public int CodeId { get; set; }
+        public virtual Coding Code { get; set; }
         public DateTime MeasuredTime { get; set; }
-        public Category Category { get; set; }
+        [ForeignKey("Category")]
+        public int CategoryId { get; set; }
+        public virtual Category Category { get; set; }
         public DateTime ReportedDate { get; set; }
         [ForeignKey("Patient")]
         public Guid PatientId { get; set; }

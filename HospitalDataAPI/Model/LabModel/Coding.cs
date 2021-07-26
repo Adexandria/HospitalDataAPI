@@ -2,10 +2,11 @@
 
 namespace HospitalDataAPI.Model.LabModel
 {
-    public class Category
+    public class Coding
     {
         [Key]
-        public int CategoryId { get; set; }
+        public int TestCodeId { get; set; }
         public string Code { get; set; }
+        public string Text { get; set; }
     }
 }
