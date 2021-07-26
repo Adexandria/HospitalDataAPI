@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -53,6 +54,10 @@ namespace HospitalDataAPI
                 };
             });
             services.AddSingleton<Credentials>();
+            services.AddDbContext<DataContext>(opt => 
+            {
+                opt.UseSqlServer(Configuration["ConnectionStrings: HospitalDataAPI"]).EnableSensitiveDataLogging();
+            });
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddSwaggerGen(setupAction =>
             {
