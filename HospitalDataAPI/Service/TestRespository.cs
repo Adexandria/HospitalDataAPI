@@ -117,8 +117,17 @@ namespace HospitalDataAPI.Service
         }
         public IEnumerable<Coding> GetCodingsByName(string name)
         {
-            if (string.IsNullOrWhiteSpace(name)) throw new NullReferenceException(nameof(name));
-            return dataDb.Coding.Where(s => s.Text.Contains(name)).AsNoTracking();
+            try
+            {
+                if (string.IsNullOrWhiteSpace(name)) throw new NullReferenceException(nameof(name));
+                return dataDb.Coding.Where(s => s.Text.Contains(name)).AsNoTracking();
+            }
+            catch (Exception e)
+            {
+
+                throw e;
+            }
+            
         }
 
         //Category
@@ -131,8 +140,17 @@ namespace HospitalDataAPI.Service
         }
         public IEnumerable<Category> GetCategoryByName(string name)
         {
-            if (string.IsNullOrWhiteSpace(name)) throw new NullReferenceException(nameof(name));
-            return dataDb.Category.Where(s => s.Code.Contains(name)).AsNoTracking();
+            try
+            {
+                if (string.IsNullOrWhiteSpace(name)) throw new NullReferenceException(nameof(name));
+                return dataDb.Category.Where(s => s.Code.Contains(name)).AsNoTracking();
+            }
+            catch (Exception e)
+            {
+
+                throw e;
+            }
+            
         }
 
         private async Task Save() 
