@@ -8,9 +8,9 @@ namespace HospitalDataAPI.Service
 {
    public interface IResult
     {
-        IEnumerable<LabResult> GetLabResultById(Guid patientId);
-        Task<LabResult> GetLabResult(Guid patientId, int testId);
-        Task<LabResult> AddLabResultId(Guid patientId);
-        Task<LabResult> UpdateLabResultId(Guid patientId);
+        IEnumerable<LabResult> GetLabResultsById(Guid patientId);
+        Task<LabResult> GetLabResult(Guid patientId, Guid testId);
+        Task AddLabResultId(Guid patientId,LabResult newLabResult);
+        Task<LabResult> UpdateLabResultId(Guid patientId, Guid testId, LabResult updateLabResult);
     }
 }
