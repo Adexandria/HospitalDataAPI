@@ -9,7 +9,7 @@ namespace HospitalDataAPI.Service
     {
         IEnumerable<Patient> GetPatients { get; }
         Task<Patient> GetPatientById(Guid patientId);
-        Task<Patient> GetPatientByName(string patientName);
+        IEnumerable<Patient> GetPatientByName(string patientName);
         Task AddPatient(Patient newPatient);
         Task<Patient> UpdatePatient(Patient updatePatient,Guid patientId);
         Task Save(); 
