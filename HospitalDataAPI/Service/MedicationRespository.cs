@@ -105,30 +105,57 @@ namespace HospitalDataAPI.Service
 
         public IEnumerable<Medication> GetMedicationByName(string name)
         {
-            if (string.IsNullOrWhiteSpace(name)) throw new NullReferenceException(nameof(name));
+            try
+            {
+                if (string.IsNullOrWhiteSpace(name)) throw new NullReferenceException(nameof(name));
 
-            var currentMedication = dataDb.Medication.Where(s => s.Display.Contains(name)).OrderBy(s=>s.MedicationId);
-            if (currentMedication == null) throw new NullReferenceException(nameof(currentMedication));
-            return currentMedication;
+                var currentMedication = dataDb.Medication.Where(s => s.Display.Contains(name)).OrderBy(s => s.MedicationId);
+                if (currentMedication == null) throw new NullReferenceException(nameof(currentMedication));
+                return currentMedication;
+            }
+            catch (Exception e)
+            {
+
+                throw e;
+            }
+           
         }
         public async Task AddMedication(Medication newMedication)
         {
-            if (newMedication == null) throw new NullReferenceException(nameof(newMedication));
+            try
+            {
+                if (newMedication == null) throw new NullReferenceException(nameof(newMedication));
 
-            await dataDb.Medication.AddAsync(newMedication);
-            await Save();
+                await dataDb.Medication.AddAsync(newMedication);
+                await Save();
+            }
+            catch (Exception e)
+            {
+
+                throw e;
+            }
+          
         }
         public async Task<Medication> UpdateMedication(Medication updateMedication,int medicationId)
         {
-            if (medicationId == 0) throw new NullReferenceException(nameof(medicationId));
-            if (updateMedication == null) throw new NullReferenceException(nameof(updateMedication));
+            try
+            {
+                if (medicationId == 0) throw new NullReferenceException(nameof(medicationId));
+                if (updateMedication == null) throw new NullReferenceException(nameof(updateMedication));
 
-            var currentMedication = await dataDb.Medication.Where(s => s.MedicationId == medicationId).FirstOrDefaultAsync();
-            if (currentMedication == null) throw new NullReferenceException(nameof(currentMedication));
+                var currentMedication = await dataDb.Medication.Where(s => s.MedicationId == medicationId).FirstOrDefaultAsync();
+                if (currentMedication == null) throw new NullReferenceException(nameof(currentMedication));
 
-            dataDb.Entry(currentMedication).State = EntityState.Detached;
-            dataDb.Entry(updateMedication).State = EntityState.Modified;
-            return await dataDb.Medication.Where(s => s.MedicationId == medicationId).FirstOrDefaultAsync();
+                dataDb.Entry(currentMedication).State = EntityState.Detached;
+                dataDb.Entry(updateMedication).State = EntityState.Modified;
+                return await dataDb.Medication.Where(s => s.MedicationId == medicationId).FirstOrDefaultAsync();
+            }
+            catch (Exception e)
+            {
+
+                throw e;
+            }
+          
         }
 
         private async Task Save() 
