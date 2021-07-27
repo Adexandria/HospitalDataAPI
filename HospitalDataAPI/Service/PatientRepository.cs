@@ -40,13 +40,13 @@ namespace HospitalDataAPI.Service
             
         }
 
-        public async Task<Patient> GetPatientByName(string patientName)
+        public IEnumerable<Patient> GetPatientByName(string patientName)
         {
             try
             {
                 if (string.IsNullOrWhiteSpace(patientName)) throw new NullReferenceException(nameof(patientName));
 
-                var patient = await dataDb.Patient.Where(s => s.LastName.Contains(patientName)).FirstOrDefaultAsync();
+                var patient = dataDb.Patient.Where(s => s.LastName.Contains(patientName)).OrderBy(s=>s.PatientId);
                 if (patient == null) throw new NullReferenceException(nameof(patient));
                 return patient;
             }
