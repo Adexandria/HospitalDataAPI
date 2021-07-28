@@ -20,7 +20,11 @@ namespace HospitalDataAPI.Service
             try
             {
                 if (patientId == null) throw new NullReferenceException(nameof(patientId));
-                var labResult = dataDb.LabResult.Where(s => s.PatientId == patientId).AsNoTracking();
+                var labResult = dataDb.LabResult.Where(s => s.PatientId == patientId)
+                    .Include(s=>s.Patient)
+                    .Include(s=>s.LabTest)
+                    .Include(s => s.Code)
+                    .AsNoTracking();
                 //if (labResult == null) throw new NullReferenceException(nameof(labResult));
                 return labResult;
             }
@@ -37,7 +41,8 @@ namespace HospitalDataAPI.Service
             {
                 if (patientId == null) throw new NullReferenceException(nameof(patientId));
                 if (testId == null) throw new NullReferenceException(nameof(testId));
-                var labResult = await dataDb.LabResult.Where(s => s.PatientId == patientId).Where(s => s.TestId == testId).AsNoTracking().FirstOrDefaultAsync();
+                var labResult = await dataDb.LabResult.Where(s => s.PatientId == patientId).Where(s => s.TestId == testId).Include(s => s.Patient)
+                    .Include(s => s.LabTest).Include(s => s.Code).AsNoTracking().FirstOrDefaultAsync();
                // if (labResult == null) throw new NullReferenceException(nameof(labResult));
                 return labResult;
             }
