@@ -10,10 +10,7 @@ namespace HospitalDataAPI.Model.DTO.LabDTO
     {
         [Required(ErrorMessage ="Enter Final/Pending")]
         public string Status { get; set; }
-        [Required(ErrorMessage = "Enter measured time (yyyy/mm/dd)")]
-        public DateTime MeasuredTime { get; set; }
-        [Required(ErrorMessage = "Enter reported time (yyyy/mm/dd")]
-        public DateTime ReportedDate { get; set; }
+
 
     }
 }
