@@ -29,7 +29,7 @@ namespace HospitalDataAPI.Service
                 if (patientId == null) throw new NullReferenceException(nameof(patientId));
 
                 var patient = await dataDb.Patient.Where(s => s.PatientId == patientId).FirstOrDefaultAsync();
-                if (patient == null) throw new NullReferenceException(nameof(patient));
+                //if (patient == null) throw new NullReferenceException(nameof(patient));
                 return patient;
             }
             catch (Exception e)
@@ -47,7 +47,7 @@ namespace HospitalDataAPI.Service
                 if (string.IsNullOrWhiteSpace(patientName)) throw new NullReferenceException(nameof(patientName));
 
                 var patient = dataDb.Patient.Where(s => s.LastName.Contains(patientName)).OrderBy(s=>s.PatientId);
-                if (patient == null) throw new NullReferenceException(nameof(patient));
+                //if (patient == null) throw new NullReferenceException(nameof(patient));
                 return patient;
             }
             catch (Exception e)
@@ -82,7 +82,7 @@ namespace HospitalDataAPI.Service
                 if (patientId == null) throw new NullReferenceException(nameof(patientId));
 
                 var currentPatient = await GetPatientById(patientId);
-                if (currentPatient == null) throw new NullReferenceException(nameof(currentPatient));
+                //if (currentPatient == null) throw new NullReferenceException(nameof(currentPatient));
 
                 updatePatient.PatientId = patientId;
                 dataDb.Entry(currentPatient).State = EntityState.Detached;

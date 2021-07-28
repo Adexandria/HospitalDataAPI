@@ -21,7 +21,7 @@ namespace HospitalDataAPI.Service
             {
                 if (patientId == null) throw new NullReferenceException(nameof(patientId));
                 var labResult = dataDb.LabResult.Where(s => s.PatientId == patientId).AsNoTracking();
-                if (labResult == null) throw new NullReferenceException(nameof(labResult));
+                //if (labResult == null) throw new NullReferenceException(nameof(labResult));
                 return labResult;
             }
             catch (Exception e)
@@ -38,7 +38,7 @@ namespace HospitalDataAPI.Service
                 if (patientId == null) throw new NullReferenceException(nameof(patientId));
                 if (testId == null) throw new NullReferenceException(nameof(testId));
                 var labResult = await dataDb.LabResult.Where(s => s.PatientId == patientId).Where(s => s.TestId == testId).AsNoTracking().FirstOrDefaultAsync();
-                if (labResult == null) throw new NullReferenceException(nameof(labResult));
+               // if (labResult == null) throw new NullReferenceException(nameof(labResult));
                 return labResult;
             }
             catch (Exception e)
@@ -72,7 +72,7 @@ namespace HospitalDataAPI.Service
                 if (updateLabResult == null) throw new NullReferenceException(nameof(updateLabResult));
 
                 var currentLabResult = await GetLabResult(patientId, testId);
-                if (currentLabResult == null) throw new NullReferenceException(nameof(currentLabResult));
+               // if (currentLabResult == null) throw new NullReferenceException(nameof(currentLabResult));
 
                 dataDb.Entry(currentLabResult).State = EntityState.Detached;
                 dataDb.Entry(updateLabResult).State = EntityState.Detached;
