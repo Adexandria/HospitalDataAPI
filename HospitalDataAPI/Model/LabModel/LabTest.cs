@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HospitalDataAPI.Model.PatientModel;
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -19,6 +20,7 @@ namespace HospitalDataAPI.Model.LabModel
         public DateTime ReportedDate { get; set; }
         [ForeignKey("Patient")]
         public Guid PatientId { get; set; }
+        public Patient Patient { get; set; }
     }
 
 }
