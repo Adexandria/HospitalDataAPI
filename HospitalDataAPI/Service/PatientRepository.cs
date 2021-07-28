@@ -18,7 +18,7 @@ namespace HospitalDataAPI.Service
         {
             get
             {
-                return dataDb.Patient.OrderBy(s => s.FirstName).ThenByDescending(s => s.LastName);
+                return dataDb.Patient.OrderBy(s => s.FirstName).ThenByDescending(s => s.LastName).AsNoTracking();
             }
         }
 
@@ -28,7 +28,7 @@ namespace HospitalDataAPI.Service
             {
                 if (patientId == null) throw new NullReferenceException(nameof(patientId));
 
-                var patient = await dataDb.Patient.Where(s => s.PatientId == patientId).FirstOrDefaultAsync();
+                var patient = await dataDb.Patient.Where(s => s.PatientId == patientId).AsNoTracking().FirstOrDefaultAsync();
                 //if (patient == null) throw new NullReferenceException(nameof(patient));
                 return patient;
             }
@@ -46,7 +46,7 @@ namespace HospitalDataAPI.Service
             {
                 if (string.IsNullOrWhiteSpace(patientName)) throw new NullReferenceException(nameof(patientName));
 
-                var patient = dataDb.Patient.Where(s => s.LastName.Contains(patientName)).OrderBy(s=>s.PatientId);
+                var patient = dataDb.Patient.Where(s => s.LastName.Contains(patientName)).OrderBy(s=>s.PatientId).AsNoTracking();
                 //if (patient == null) throw new NullReferenceException(nameof(patient));
                 return patient;
             }
