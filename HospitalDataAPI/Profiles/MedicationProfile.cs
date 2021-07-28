@@ -1,10 +1,6 @@
 ﻿using AutoMapper;
 using HospitalDataAPI.Model.DTO.Medications;
 using HospitalDataAPI.Model.MedicationModel;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace HospitalDataAPI.Profiles
 {
