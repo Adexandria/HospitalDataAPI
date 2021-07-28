@@ -22,7 +22,7 @@ namespace HospitalDataAPI.Service
             {
                 if (patientId == null) throw new NullReferenceException(nameof(patientId));
 
-                var prescribed = dataDb.PrescribedMedication.Where(s => s.PatientId == patientId);
+                var prescribed = dataDb.PrescribedMedication.Where(s => s.PatientId == patientId).Include(s=>s.Patient);
                 //if (prescribed == null) throw new NullReferenceException(nameof(prescribed));
                 return prescribed;
             }
@@ -40,7 +40,7 @@ namespace HospitalDataAPI.Service
                 if (patientId == null) throw new NullReferenceException(nameof(patientId));
                 if (newPrescribed == null) throw new NullReferenceException(nameof(newPrescribed));
 
-                var prescribed = dataDb.PrescribedMedication.Where(s => s.PatientId == patientId);
+               //  var prescribed = dataDb.PrescribedMedication.Where(s => s.PatientId == patientId);
                // if (prescribed == null) throw new NullReferenceException(nameof(prescribed));
 
                 await dataDb.PrescribedMedication.AddAsync(newPrescribed);
@@ -83,7 +83,7 @@ namespace HospitalDataAPI.Service
                 if (patientId == null) throw new NullReferenceException(nameof(patientId));
                 if (prescribedId == null) throw new NullReferenceException(nameof(prescribedId));
 
-                var currentPrescribed = await dataDb.PrescribedMedication.Where(s => s.PrescribedId == prescribedId).FirstOrDefaultAsync();
+                var currentPrescribed = await dataDb.PrescribedMedication.Where(s => s.PrescribedId == prescribedId).Include(s=>s.Patient).FirstOrDefaultAsync();
                 //if (currentPrescribed == null) throw new NullReferenceException(nameof(currentPrescribed));
                 return currentPrescribed;
             }
