@@ -1,4 +1,4 @@
-﻿namespace HospitalDataAPI.Model.MedicationModel
+﻿   namespace HospitalDataAPI.Model.MedicationModel
 {
     public enum MedicationStatus
     {
