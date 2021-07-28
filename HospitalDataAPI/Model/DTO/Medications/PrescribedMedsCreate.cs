@@ -10,7 +10,7 @@ namespace HospitalDataAPI.Model.DTO.Medications
     {
         [Required(ErrorMessage ="Enter Date(yyyy/mm/dd)")]
         public DateTime Date { get; set; }
-        [Required(ErrorMessage = "Enter Final/Pending")]
+        [Required(ErrorMessage = "Enter Active/InActive")]
         public string Status { get; set; }
         [Required(ErrorMessage = "Enter Presciber")]
         public string Prescriber { get; set; }
