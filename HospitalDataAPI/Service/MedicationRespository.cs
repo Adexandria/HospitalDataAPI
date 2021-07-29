@@ -143,12 +143,13 @@ namespace HospitalDataAPI.Service
                 if (medicationId == 0) throw new NullReferenceException(nameof(medicationId));
                 if (updateMedication == null) throw new NullReferenceException(nameof(updateMedication));
 
-                var currentMedication = await dataDb.Medication.Where(s => s.MedicationId == medicationId).FirstOrDefaultAsync();
-               // if (currentMedication == null) throw new NullReferenceException(nameof(currentMedication));
-
+                var currentMedication = await GetMedicationById(medicationId);
+                // if (currentMedication == null) throw new NullReferenceException(nameof(currentMedication));
+                Update(currentMedication, updateMedication);
                 dataDb.Entry(currentMedication).State = EntityState.Detached;
                 dataDb.Entry(updateMedication).State = EntityState.Modified;
-                return await dataDb.Medication.Where(s => s.MedicationId == medicationId).FirstOrDefaultAsync();
+                await Save();
+                return await GetMedicationById(medicationId);
             }
             catch (Exception e)
             {
@@ -157,10 +158,34 @@ namespace HospitalDataAPI.Service
             }
           
         }
+        public async Task<Medication> GetMedicationById(int medicationId)
+        {
+            if (medicationId == 0) throw new NullReferenceException(nameof(medicationId));
+            return  await dataDb.Medication.Where(s => s.MedicationId == medicationId).FirstOrDefaultAsync();
+        }
 
+        public async Task DeleteMedication(int medicationId)
+        {
+            var currentMedication = await GetMedicationById(medicationId);
+            dataDb.Medication.Remove(currentMedication);
+            await Save();
+        }
         private async Task Save() 
         {
            await dataDb.SaveChangesAsync();
+        }
+
+        private void Update(Medication currentmedication,Medication updateMedication)
+        {
+            updateMedication.MedicationId = currentmedication.MedicationId;
+            if(string.IsNullOrWhiteSpace(updateMedication.Code)|| updateMedication.Code == "string") 
+            {
+                updateMedication.Code = currentmedication.Code;
+            }
+            if (string.IsNullOrWhiteSpace(updateMedication.Display) || updateMedication.Display == "string")
+            {
+                updateMedication.Display = currentmedication.Display;
+            }
         }
     }
 }
