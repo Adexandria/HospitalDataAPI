@@ -83,10 +83,9 @@ namespace HospitalDataAPI.Service
 
                 var currentPatient = await GetPatientById(patientId);
                 //if (currentPatient == null) throw new NullReferenceException(nameof(currentPatient));
-
-                updatePatient.PatientId = patientId;
-                dataDb.Entry(currentPatient).State = EntityState.Detached;
-                dataDb.Entry(updatePatient).State = EntityState.Modified;
+                Update(currentPatient, updatePatient);
+                var query = dataDb.Patient.Attach(updatePatient);
+                query.State = EntityState.Modified;
                 await Save();
 
                 return await GetPatientById(patientId);
@@ -103,10 +102,51 @@ namespace HospitalDataAPI.Service
           await dataDb.SaveChangesAsync(); 
         }
 
-       /* private void Update(Patient currentPatient,Patient updatePatient) 
+        private void Update(Patient currentPatient,Patient updatePatient) 
         {
-            if(updatePatient.)
-        }*/
+            updatePatient.PatientId = currentPatient.PatientId;
+
+            if(string.IsNullOrWhiteSpace(updatePatient.AddressBox) || updatePatient.AddressBox == "string") 
+            {
+                updatePatient.AddressBox = currentPatient.AddressBox;
+            }
+            if (string.IsNullOrWhiteSpace(updatePatient.FirstName) || updatePatient.FirstName == "string")
+            {
+                updatePatient.FirstName = currentPatient.FirstName;
+            }
+            if (string.IsNullOrWhiteSpace(updatePatient.LastName) || updatePatient.LastName == "string")
+            {
+                updatePatient.LastName = currentPatient.LastName;
+            }
+            if (string.IsNullOrWhiteSpace(updatePatient.MiddleName) || updatePatient.MiddleName == "string")
+            {
+                updatePatient.MiddleName = currentPatient.MiddleName;
+            }
+            if (string.IsNullOrWhiteSpace(updatePatient.Phonenumber) || updatePatient.Phonenumber == "string")
+            {
+                updatePatient.Phonenumber = currentPatient.Phonenumber;
+            }
+            if (updatePatient.Race.ToString() == "Black")
+            {
+                updatePatient.Race = currentPatient.Race;
+            }
+            if (updatePatient.MaritalStatus.ToString() == "Single")
+            {
+                updatePatient.MaritalStatus = currentPatient.MaritalStatus;
+            }
+            if (updatePatient.Gender.ToString() == "Male")
+            {
+                updatePatient.Gender = currentPatient.Gender;
+            }
+            if (updatePatient.BirthSex.ToString() == "Male")
+            {
+                updatePatient.BirthSex = currentPatient.BirthSex;
+            }
+            if(updatePatient.DateOfBirth.Date == new DateTime(0001, 1, 01)) 
+            {
+                updatePatient.DateOfBirth = currentPatient.DateOfBirth;
+            }
+        }
         
     }
 }
