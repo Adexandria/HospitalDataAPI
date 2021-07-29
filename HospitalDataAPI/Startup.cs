@@ -58,6 +58,12 @@ namespace HospitalDataAPI
             {
                 opt.UseSqlServer(Configuration["ConnectionStrings:HospitalDataAPI"]).EnableSensitiveDataLogging();
             });
+
+            services.AddScoped<IPatient, PatientRepository>();
+            services.AddScoped<IMedication, MedicationRespository>();
+            services.AddScoped<ITest, TestRespository>();
+            services.AddScoped<IResult, ResultRespository>();
+
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddSwaggerGen(setupAction =>
             {
