@@ -13,7 +13,7 @@ namespace HospitalDataAPI.Profiles
                 .ForMember(s => s.Date, opt => opt.MapFrom(s => s.Date.Date.ToString()));
             CreateMap<PrescribedMedsUpdate, PrescribedMedication>();
             CreateMap<PrescribedMedsCreate, PrescribedMedication>();
-
+            //CreateMap<PrescribedMedication,PrescribedMedication>().ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
 
             CreateMap<Medication, MedicationDTO>();
             CreateMap<MedicationCreate, Medication>();
