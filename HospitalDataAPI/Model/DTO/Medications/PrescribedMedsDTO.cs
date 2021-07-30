@@ -1,9 +1,6 @@
-﻿using HospitalDataAPI.Model.MedicationModel;
-using HospitalDataAPI.Model.PatientModel;
+﻿using HospitalDataAPI.Model.DTO.Patients;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+
 
 namespace HospitalDataAPI.Model.DTO.Medications
 {
@@ -13,8 +10,8 @@ namespace HospitalDataAPI.Model.DTO.Medications
         public string Date { get; set; }
         public string Status { get; set; }
         public string Prescriber { get; set; }
-        public Medication Medication { get; set; }
-        public Patient Patient { get; set; }
+        public MedicationDTO Medication { get; set; }
+        public PatientDTO Patient { get; set; }
 
     }
 }

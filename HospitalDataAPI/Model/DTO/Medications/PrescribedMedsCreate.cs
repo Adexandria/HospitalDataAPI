@@ -14,6 +14,8 @@ namespace HospitalDataAPI.Model.DTO.Medications
         public string Status { get; set; }
         [Required(ErrorMessage = "Enter Presciber")]
         public string Prescriber { get; set; }
-       
+        [Required(ErrorMessage = "Enter MedicationId")]
+        public int MedicationId { get; set; }
+
     }
 }
