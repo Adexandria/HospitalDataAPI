@@ -20,6 +20,6 @@ namespace HospitalDataAPI.Model.MedicationModel
         public Medication Medication { get; set; }
         [ForeignKey("Patient")]
         public Guid PatientId { get; set; }
-        public virtual Patient Patient { get; set; }
+        public  Patient Patient { get; set; }
     }
 }
