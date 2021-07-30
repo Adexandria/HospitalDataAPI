@@ -22,7 +22,7 @@ namespace HospitalDataAPI.Service
             {
                 if (patientId == null) throw new NullReferenceException(nameof(patientId));
 
-                var prescribed = dataDb.PrescribedMedication.Where(s => s.PatientId == patientId).Include(s=>s.Patient);
+                var prescribed = dataDb.PrescribedMedication.Where(s => s.PatientId == patientId).Include(s=>s.Patient).Include(s=>s.Medication);
                 //if (prescribed == null) throw new NullReferenceException(nameof(prescribed));
                 return prescribed;
             }
@@ -40,9 +40,10 @@ namespace HospitalDataAPI.Service
                 if (patientId == null) throw new NullReferenceException(nameof(patientId));
                 if (newPrescribed == null) throw new NullReferenceException(nameof(newPrescribed));
 
-               //  var prescribed = dataDb.PrescribedMedication.Where(s => s.PatientId == patientId);
-               // if (prescribed == null) throw new NullReferenceException(nameof(prescribed));
-
+                //  var prescribed = dataDb.PrescribedMedication.Where(s => s.PatientId == patientId);
+                // if (prescribed == null) throw new NullReferenceException(nameof(prescribed));
+                newPrescribed.PrescribedId = Guid.NewGuid();
+                newPrescribed.PatientId = patientId;
                 await dataDb.PrescribedMedication.AddAsync(newPrescribed);
                 await Save();
             }
@@ -61,9 +62,9 @@ namespace HospitalDataAPI.Service
                 if (patientId == null) throw new NullReferenceException(nameof(patientId));
                 if (updatePrescribed == null) throw new NullReferenceException(nameof(updatePrescribed));
 
-                var currentPrescribed = GetMedicationById(patientId,updatePrescribed.PrescribedId);
-               // if (currentPrescribed == null) throw new NullReferenceException(nameof(currentPrescribed));
-
+                var currentPrescribed = await GetMedicationById(patientId,updatePrescribed.PrescribedId);
+                // if (currentPrescribed == null) throw new NullReferenceException(nameof(currentPrescribed));
+                UpdatePrescription(currentPrescribed, updatePrescribed);
                 dataDb.Entry(currentPrescribed).State = EntityState.Detached;
                 dataDb.Entry(updatePrescribed).State = EntityState.Modified;
                 return await GetMedicationById(patientId, updatePrescribed.PrescribedId);
@@ -76,7 +77,7 @@ namespace HospitalDataAPI.Service
            
         }
 
-        private async Task<PrescribedMedication> GetMedicationById(Guid patientId,Guid prescribedId) 
+        public async Task<PrescribedMedication> GetMedicationById(Guid patientId,Guid prescribedId) 
         {
             try
             {
@@ -186,6 +187,30 @@ namespace HospitalDataAPI.Service
             {
                 updateMedication.Display = currentmedication.Display;
             }
+
+        }
+
+        private void UpdatePrescription(PrescribedMedication currentMedication,PrescribedMedication updatemedication) 
+        {
+            updatemedication.PatientId = currentMedication.PatientId;
+            if(updatemedication.MedicationId == 0) 
+            {
+                updatemedication.MedicationId = currentMedication.MedicationId;
+            }
+            if(updatemedication.Prescriber == "string" || string.IsNullOrWhiteSpace(updatemedication.Prescriber)) 
+            {
+                updatemedication.Prescriber = currentMedication.Prescriber;
+            }
+            if (updatemedication.Status.ToString() == "Active") 
+            {
+                updatemedication.Status = currentMedication.Status;
+            }
+            if(updatemedication.Date.Date == new DateTime(0001, 1, 01))
+            {
+                updatemedication.Date = currentMedication.Date;
+            }
+
         }
     }
+
 }

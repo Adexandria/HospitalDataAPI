@@ -10,6 +10,7 @@ namespace HospitalDataAPI.Service
     {
         //PrescribedMedication
         IEnumerable<PrescribedMedication> GetMedicationsById(Guid patientId);
+        Task<PrescribedMedication> GetMedicationById(Guid patientId, Guid prescribedId);
         Task AddMedicationById(Guid patientId,PrescribedMedication newPrescribed);
         Task<PrescribedMedication> UpdateMedicationById(Guid patientId,PrescribedMedication updatePrescribed);
 
