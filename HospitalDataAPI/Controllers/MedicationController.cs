@@ -20,7 +20,7 @@ namespace HospitalDataAPI.Controllers
     [SwaggerResponse((int)HttpStatusCode.BadRequest)]
     [SwaggerResponse((int)HttpStatusCode.Unauthorized)]
 
-    [Route("api/Medication")]
+    [Route("api/medication")]
     [ApiController]
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class MedicationController : ControllerBase
