@@ -41,7 +41,7 @@ namespace HospitalDataAPI.Controllers
             try
             {
                 var currentPatient = await _patient.GetPatientById(patientId);
-                if (currentPatient == null) return NotFound();
+                if (currentPatient == null) return NotFound("Patient not found");
                 var currentMeds = _medication.GetMedicationsById(patientId);
                 var mappedMeds = _mapper.Map<IEnumerable<PrescribedMedsDTO>>(currentMeds);
                 return Ok(mappedMeds);
@@ -59,7 +59,7 @@ namespace HospitalDataAPI.Controllers
             try
             {
                 var currentPatient = await _patient.GetPatientById(patientId);
-                if (currentPatient == null) return NotFound();
+                if (currentPatient == null) return NotFound("Patient not found");
                 var currentMeds = await _medication.GetMedicationById(patientId,prescribedId);
                 if (currentMeds == null) return NotFound();
                 var mappedMeds = _mapper.Map<PrescribedMedsDTO>(currentMeds);
@@ -78,7 +78,7 @@ namespace HospitalDataAPI.Controllers
             try
             {
                 var currentPatient = await _patient.GetPatientById(patientId);
-                if (currentPatient == null) return NotFound();
+                if (currentPatient == null) return NotFound("Patient not found");
                 var mappedMedication = _mapper.Map<PrescribedMedication>(patientMedication);
                 await _medication.AddMedicationById(patientId, mappedMedication);
                 return Ok("Successful");
