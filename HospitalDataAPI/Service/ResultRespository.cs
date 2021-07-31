@@ -53,12 +53,13 @@ namespace HospitalDataAPI.Service
             }
         }
 
-        public async Task AddLabResultId(Guid patientId, LabResult newLabResult)
+        public async Task AddLabResultId(Guid patientId,LabResult newLabResult)
         {
             try
             {
                 if (patientId == null) throw new NullReferenceException(nameof(patientId));
                 if (newLabResult == null) throw new NullReferenceException(nameof(newLabResult));
+            
                 newLabResult.ResultId = Guid.NewGuid();
                 await dataDb.LabResult.AddAsync(newLabResult);
                 await Save();

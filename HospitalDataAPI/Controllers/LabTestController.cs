@@ -36,9 +36,20 @@ namespace HospitalDataAPI.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<LabTestDTO>> GetPatientTest(Guid patientId ) 
         {
-            var tests = _test.GetLabTestsById(patientId);
-            var mappedTests = _mapper.Map<IEnumerable<LabTestDTO>>(tests);
-            return Ok(mappedTests);
+            try
+            {
+                var currentPatient = _patient.GetPatientById(patientId).Result;
+                if (currentPatient == null) return NotFound("Patient not found");
+                var tests = _test.GetLabTestsById(patientId);
+                var mappedTests = _mapper.Map<IEnumerable<LabTestDTO>>(tests);
+                return Ok(mappedTests);
+            }
+            catch (Exception e)
+            {
+
+                return BadRequest(e.Message);
+            }
+
         }
         [HttpGet("{testId}")]
         public async Task<ActionResult<LabTestDTO>> GetTestById(Guid patientId,Guid testId) 
@@ -77,7 +88,7 @@ namespace HospitalDataAPI.Controllers
             }
         }
         [HttpPost]
-        public async Task<ActionResult<LabTestDTO>> AddPatientTest(Guid patientId,LabTestCreate labTest) 
+        public async Task<ActionResult> AddPatientTest(Guid patientId,LabTestCreate labTest) 
         {
             try
             {

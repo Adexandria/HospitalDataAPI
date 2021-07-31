@@ -1,7 +1,4 @@
-﻿using HospitalDataAPI.Model.DTO.Patients;
-using HospitalDataAPI.Model.LabModel;
-using HospitalDataAPI.Model.PatientModel;
-using System;
+﻿using System;
 
 
 namespace HospitalDataAPI.Model.DTO.LabDTO
@@ -16,6 +13,5 @@ namespace HospitalDataAPI.Model.DTO.LabDTO
         public string ResultTime { get; set; }
         public  CategoryDTO Category { get; set; }
         public LabTestDTO LabTest { get; set; }
-        public PatientDTO Patient { get; set; }
     }
 }
