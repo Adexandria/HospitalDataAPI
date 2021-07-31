@@ -142,7 +142,7 @@ namespace HospitalDataAPI.Service
             {
                 updatePatient.BirthSex = currentPatient.BirthSex;
             }
-            if(updatePatient.DateOfBirth.Date == new DateTime(0001, 1, 01)) 
+            if(updatePatient.DateOfBirth.Date == new DateTime(0001,01,01)) 
             {
                 updatePatient.DateOfBirth = currentPatient.DateOfBirth;
             }
