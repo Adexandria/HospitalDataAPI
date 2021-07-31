@@ -22,7 +22,7 @@ namespace HospitalDataAPI.Service
             {
                 if (patientId == null) throw new NullReferenceException(nameof(patientId));
                 if (string.IsNullOrWhiteSpace(code)) throw new NullReferenceException(nameof(code));
-                var labTest = await dataDb.LabTest.Where(s => s.PatientId == patientId).Where(s => s.Code.Code == code)
+                var labTest = await dataDb.LabTest.Where(s => s.PatientId == patientId).Where(s => s.Code.Code.Contains(code))
                     .Include(s=>s.Patient).Include(s=>s.Category).Include(s=>s.Code).AsNoTracking().FirstOrDefaultAsync();
                // if (labTest == null) throw new NullReferenceException(nameof(labTest));
                 return labTest;
