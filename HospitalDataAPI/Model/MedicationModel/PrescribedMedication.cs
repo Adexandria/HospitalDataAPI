@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using HospitalDataAPI.Model.PatientModel;
-using System.Linq;
-using System.Threading.Tasks;
+
 
 namespace HospitalDataAPI.Model.MedicationModel
 {
