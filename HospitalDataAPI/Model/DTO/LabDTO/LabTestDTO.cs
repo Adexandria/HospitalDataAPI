@@ -1,5 +1,4 @@
-﻿using HospitalDataAPI.Model.LabModel;
-using HospitalDataAPI.Model.PatientModel;
+﻿using HospitalDataAPI.Model.DTO.Patients;
 using System;
 
 namespace HospitalDataAPI.Model.DTO.LabDTO
@@ -8,9 +7,9 @@ namespace HospitalDataAPI.Model.DTO.LabDTO
     {
         public Guid TestId { get; set; }
         public string Status { get; set; }
-        public Coding Code { get; set; }
-        public Category Category { get; set; }
+        public CodingDTO Code { get; set; }
+        public CategoryDTO Category { get; set; }
         public string ReportedDate { get; set; }
-        public Patient Patient { get; set; }
+        public PatientDTO Patient { get; set; }
     }
 }
