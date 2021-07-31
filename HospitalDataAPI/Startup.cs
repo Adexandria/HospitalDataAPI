@@ -1,3 +1,4 @@
+using HospitalDataAPI.Controllers;
 using HospitalDataAPI.Service;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -11,6 +12,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Swashbuckle.Examples;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -29,9 +31,11 @@ namespace HospitalDataAPI
         }
 
         public IConfiguration Configuration { get; }
+  
 
-        // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services)
+
+    // This method gets called by the runtime. Use this method to add services to the container.
+    public void ConfigureServices(IServiceCollection services)
         {
             var jwtSettings = Configuration.GetSection("JwtSettings");
             services.AddControllers();
@@ -81,6 +85,7 @@ namespace HospitalDataAPI
                     }
 
                 });
+               // setupAction.OperationFilter<ExamplesOperationFilter>();
                 var securityScheme = new OpenApiSecurityScheme
                 {
                     Name = "JWT Authentication",
