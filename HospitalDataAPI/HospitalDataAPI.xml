@@ -4,5 +4,41 @@
         <name>HospitalDataAPI</name>
     </assembly>
     <members>
+        <member name="M:HospitalDataAPI.Controllers.PatientController.UpdatePatient(System.Guid,HospitalDataAPI.Model.DTO.Patients.PatientUpdate)">
+            <summary>
+            Update a patient Database.
+            </summary>
+            <remarks>
+                </remarks>
+                <param name="patientId">Guid Id of the patient</param>
+                <param name="updatePatient">Update Model of the patient Model</param>
+                <returns>An updated patient model</returns>
+            <response code="200">An updated patient model</response>
+            <response code="404">If the item is null</response>   
+        </member>
+        <member name="P:HospitalDataAPI.Model.DTO.Medications.PrescribedMedsUpdate.Date">
+            <example>0001-01-01</example>
+        </member>
+        <member name="P:HospitalDataAPI.Model.DTO.Medications.PrescribedMedsUpdate.Status">
+            <example>active</example>
+        </member>
+        <member name="P:HospitalDataAPI.Model.DTO.Patients.PatientUpdate.Gender">
+            <example>male</example>
+        </member>
+        <member name="P:HospitalDataAPI.Model.DTO.Patients.PatientUpdate.DateOfBirth">
+            <example>0001-01-01</example>
+        </member>
+        <member name="P:HospitalDataAPI.Model.DTO.Patients.PatientUpdate.MaritalStatus">
+             <summary>
+             Marital Status
+             </summary>
+            <example>single</example>
+        </member>
+        <member name="P:HospitalDataAPI.Model.DTO.Patients.PatientUpdate.Race">
+            <example>black</example>
+        </member>
+        <member name="P:HospitalDataAPI.Model.DTO.Patients.PatientUpdate.BirthSex">
+            <example>male</example>
+        </member>
     </members>
 </doc>
