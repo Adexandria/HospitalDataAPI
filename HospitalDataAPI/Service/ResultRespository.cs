@@ -59,7 +59,7 @@ namespace HospitalDataAPI.Service
             {
                 if (patientId == null) throw new NullReferenceException(nameof(patientId));
                 if (newLabResult == null) throw new NullReferenceException(nameof(newLabResult));
-
+                newLabResult.ResultId = Guid.NewGuid();
                 await dataDb.LabResult.AddAsync(newLabResult);
                 await Save();
             }
@@ -77,10 +77,11 @@ namespace HospitalDataAPI.Service
                 if (updateLabResult == null) throw new NullReferenceException(nameof(updateLabResult));
 
                 var currentLabResult = await GetLabResult(patientId, testId);
-               // if (currentLabResult == null) throw new NullReferenceException(nameof(currentLabResult));
-
+               
+                Update(currentLabResult, updateLabResult);
                 dataDb.Entry(currentLabResult).State = EntityState.Detached;
                 dataDb.Entry(updateLabResult).State = EntityState.Detached;
+                await Save();
                 return await GetLabResult(patientId, testId);
             }
             catch (Exception e)
@@ -92,6 +93,29 @@ namespace HospitalDataAPI.Service
         private async Task Save() 
         {
             await dataDb.SaveChangesAsync();
+        }
+        private void Update(LabResult currentResult, LabResult updateResult) 
+        {
+            updateResult.TestId = currentResult.TestId;
+            updateResult.PatientId = currentResult.PatientId;
+            updateResult.CategoryId = currentResult.CategoryId;
+            updateResult.CodeId = currentResult.CodeId;
+            if(updateResult.Status.ToString() == "Pending") 
+            {
+                updateResult.Status = currentResult.Status;
+            }
+            if(updateResult.ReferenceRange == "string" || string.IsNullOrWhiteSpace(updateResult.ReferenceRange))
+            {
+                updateResult.ReferenceRange = currentResult.ReferenceRange;
+            }
+            if (updateResult.ResultValue == "string" || string.IsNullOrWhiteSpace(updateResult.ResultValue))
+            {
+                updateResult.ReferenceRange = currentResult.ReferenceRange;
+            }
+            if(updateResult.ResultTime.Date == DateTime.Now.Date) 
+            {
+                updateResult.ResultTime = currentResult.ResultTime;
+            }
         }
     }
 }
