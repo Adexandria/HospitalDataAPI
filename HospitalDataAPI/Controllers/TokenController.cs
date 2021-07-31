@@ -4,13 +4,17 @@ using HospitalDataAPI.Service;
 using Microsoft.AspNetCore.Mvc;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.AspNetCore.Authorization;
-
+using System.Net;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace HospitalDataAPI.Controllers
 {
+    [SwaggerResponse((int)HttpStatusCode.OK, "Return if sucessful",type:typeof(TokenDTO))]
+    [SwaggerResponse((int)HttpStatusCode.BadRequest, "Return if failed", type: typeof(BadRequestResult))]
     [Route("api/token")]
     [ApiController]
     [AllowAnonymous]
+
     public class TokenController : ControllerBase
     {
         readonly Credentials _credential;
@@ -21,7 +25,7 @@ namespace HospitalDataAPI.Controllers
         }
 
         [HttpGet]
-        public ActionResult AccessToken() 
+        public ActionResult<TokenDTO> AccessToken() 
         {
             try
             {

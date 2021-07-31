@@ -15,9 +15,9 @@ using System.Threading.Tasks;
 namespace HospitalDataAPI.Controllers
 {
     [SwaggerResponse((int)HttpStatusCode.OK, "Return if sucessful")]
-    [SwaggerResponse((int)HttpStatusCode.NotFound, "Return if not found")]
-    [SwaggerResponse((int)HttpStatusCode.BadRequest)]
-    [SwaggerResponse((int)HttpStatusCode.Unauthorized)]
+    [SwaggerResponse((int)HttpStatusCode.NotFound, "Return if not found", type: typeof(NotFoundResult))]
+    [SwaggerResponse((int)HttpStatusCode.BadRequest, "Return if failed", type: typeof(BadRequestResult))]
+    [SwaggerResponse((int)HttpStatusCode.Unauthorized, "Return when UnAuthorized", type: typeof(UnauthorizedResult))]
 
     [Route("api/patient")]
     [ApiController]
