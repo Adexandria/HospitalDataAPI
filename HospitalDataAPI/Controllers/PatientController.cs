@@ -94,7 +94,21 @@ namespace HospitalDataAPI.Controllers
                 return BadRequest(e.Message);
             }
         }
+
+        /// <summary>
+        /// Update a patient Database.
+        /// </summary>
+        /// <remarks>
+        ///     </remarks>
+        ///     <param name="patientId">Guid Id of the patient</param>
+        ///     <param name="updatePatient">Update Model of the patient Model</param>
+        ///     <returns>An updated patient model</returns>
+        /// <response code="200">An updated patient model</response>
+        /// <response code="404">If the item is null</response>   
         [HttpPut("{patientId}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]            
+        [Produces("application/json")]
         public async Task<ActionResult<PatientDTO>> UpdatePatient(Guid patientId,PatientUpdate updatePatient)
         {
             try
