@@ -41,8 +41,8 @@ namespace HospitalDataAPI.Service
             {
                 if (patientId == null) throw new NullReferenceException(nameof(patientId));
                 if (labTestId == null) throw new NullReferenceException(nameof(labTestId));
-                var labTest = await dataDb.LabTest.Where(s => s.PatientId == patientId).Where(s => s.TestId == labTestId).AsNoTracking().FirstOrDefaultAsync();
-                //if (labTest == null) throw new NullReferenceException(nameof(labTest));
+                var labTest = await dataDb.LabTest.Where(s => s.PatientId == patientId).Where(s => s.TestId == labTestId)
+                    .Include(s => s.Category).Include(s => s.Code).AsNoTracking().FirstOrDefaultAsync();
                 return labTest;
             }
             catch (Exception e)
@@ -58,8 +58,8 @@ namespace HospitalDataAPI.Service
             try
             {
                 if (patientId == null) throw new NullReferenceException(nameof(patientId));
-                var labTests = dataDb.LabTest.Where(s => s.PatientId == patientId).OrderBy(s => s.TestId).AsNoTracking();
-                //if (labTests == null) throw new NullReferenceException(nameof(labTests));
+                var labTests = dataDb.LabTest.Where(s => s.PatientId == patientId).OrderBy(s => s.TestId)
+                    .Include(s => s.Category).Include(s => s.Code).AsNoTracking();
                 return labTests;
             }
             catch (Exception e)
@@ -75,6 +75,7 @@ namespace HospitalDataAPI.Service
             {
                 if (patientId == null) throw new NullReferenceException(nameof(patientId));
                 if (newLabTest == null) throw new NullReferenceException(nameof(newLabTest));
+                newLabTest.TestId = Guid.NewGuid();
                 await dataDb.LabTest.AddAsync(newLabTest);
                 await Save();
             }
@@ -94,11 +95,11 @@ namespace HospitalDataAPI.Service
                 if (updateLabTest == null) throw new NullReferenceException(nameof(updateLabTest));
 
                 var currentLabTest =await GetLabTestById(patientId, updateLabTest.TestId);
-               // if (currentLabTest == null) throw new NullReferenceException(nameof(currentLabTest));
 
+                Update(currentLabTest, updateLabTest);
                 dataDb.Entry(currentLabTest).State = EntityState.Detached;
                 dataDb.Entry(updateLabTest).State = EntityState.Modified;
-
+                await Save();
                 return await GetLabTestById(patientId, updateLabTest.TestId);
             }
             catch (Exception e)
@@ -157,6 +158,26 @@ namespace HospitalDataAPI.Service
         private async Task Save() 
         {
             await dataDb.SaveChangesAsync();
+        }
+
+        private void Update(LabTest currentTest, LabTest updatedTest) 
+        {
+            updatedTest.PatientId = currentTest.PatientId;
+            updatedTest.CategoryId = currentTest.CategoryId;
+            updatedTest.CodeId = currentTest.CodeId;
+            if(updatedTest.MeasuredTime.Date == DateTime.Now.Date)
+            {
+                updatedTest.MeasuredTime = currentTest.MeasuredTime;
+            }
+            if(updatedTest.ReportedDate.Date == DateTime.Now.Date) 
+            {
+                updatedTest.ReportedDate = currentTest.ReportedDate;
+            }
+            if(updatedTest.Status.ToString() == "Pending") 
+            {
+                updatedTest.Status = currentTest.Status;
+            }
+           
         }
     }
 }

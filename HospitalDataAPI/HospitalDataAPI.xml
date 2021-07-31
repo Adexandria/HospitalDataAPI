@@ -4,6 +4,42 @@
         <name>HospitalDataAPI</name>
     </assembly>
     <members>
+        <member name="M:HospitalDataAPI.Controllers.LibraryController.GetLabTestCodes">
+            <summary>
+            Get Lab Test Codes
+            </summary>
+            <remarks>
+                </remarks>
+                <returns>All Lab Test Codes in the database</returns>
+            <response code="200">All Lab Test Codes in the database</response>
+        </member>
+        <member name="M:HospitalDataAPI.Controllers.LibraryController.GetLabTestCodesByName(System.String)">
+            <summary>
+            Get Lab Test Codes By Name
+            </summary>
+            <remarks>
+                </remarks>
+                <returns>searched Lab Test Codes in the database</returns>
+            <response code="200">searched Lab Test Codes in the database</response>
+        </member>
+        <member name="M:HospitalDataAPI.Controllers.LibraryController.GetLabTestCategory">
+            <summary>
+            Get Lab Test Category
+            </summary>
+            <remarks>
+                </remarks>
+                <returns>All Lab Test Categories in the database</returns>
+            <response code="200">All Lab Test Categories in the database</response> 
+        </member>
+        <member name="M:HospitalDataAPI.Controllers.LibraryController.GetLabTestCategoryByName(System.String)">
+            <summary>
+            Get Lab Test Category by Name
+            </summary>
+            <remarks>
+                </remarks>
+                <returns>searched Lab Test Categories in the database</returns>
+            <response code="200">searched Lab Test Categories in the database</response> 
+        </member>
         <member name="M:HospitalDataAPI.Controllers.PatientController.UpdatePatient(System.Guid,HospitalDataAPI.Model.DTO.Patients.PatientUpdate)">
             <summary>
             Update a patient Database.
@@ -16,11 +52,44 @@
             <response code="200">An updated patient model</response>
             <response code="404">If the item is null</response>   
         </member>
+        <member name="P:HospitalDataAPI.Model.DTO.LabDTO.LabResultCreate.Status">
+            <example>pending</example>
+        </member>
+        <member name="P:HospitalDataAPI.Model.DTO.LabDTO.LabResultCreate.ReferenceRange">
+            <example>5.0-8.0</example>
+        </member>
+        <member name="P:HospitalDataAPI.Model.DTO.LabDTO.LabResultUpdate.Status">
+            <example>pending</example>
+        </member>
+        <member name="P:HospitalDataAPI.Model.DTO.LabDTO.LabTestCreate.Status">
+            <example>pending</example>
+        </member>
+        <member name="P:HospitalDataAPI.Model.DTO.LabDTO.LabTestUpdate.Status">
+            <example>pending</example>
+        </member>
+        <member name="P:HospitalDataAPI.Model.DTO.Medications.PrescribedMedsCreate.Date">
+            <example>0001-01-01</example>
+        </member>
+        <member name="P:HospitalDataAPI.Model.DTO.Medications.PrescribedMedsCreate.Status">
+            <example>active</example>
+        </member>
         <member name="P:HospitalDataAPI.Model.DTO.Medications.PrescribedMedsUpdate.Date">
             <example>0001-01-01</example>
         </member>
         <member name="P:HospitalDataAPI.Model.DTO.Medications.PrescribedMedsUpdate.Status">
             <example>active</example>
+        </member>
+        <member name="P:HospitalDataAPI.Model.DTO.Patients.PatientCreate.Gender">
+            <example>male</example>
+        </member>
+        <member name="P:HospitalDataAPI.Model.DTO.Patients.PatientCreate.MaritalStatus">
+            <example>single</example>
+        </member>
+        <member name="P:HospitalDataAPI.Model.DTO.Patients.PatientCreate.Race">
+            <example>black</example>
+        </member>
+        <member name="P:HospitalDataAPI.Model.DTO.Patients.PatientCreate.BirthSex">
+            <example>male</example>
         </member>
         <member name="P:HospitalDataAPI.Model.DTO.Patients.PatientUpdate.Gender">
             <example>male</example>
