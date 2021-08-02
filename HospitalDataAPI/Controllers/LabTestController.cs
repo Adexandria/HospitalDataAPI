@@ -142,7 +142,7 @@ namespace HospitalDataAPI.Controllers
 
                 LabTest updateLabTest = _mapper.Map<LabTest>(labTest);
                 LabTest updatedLabTest = await _test.UpdateLabTestById(patientId, updateLabTest);
-                LabTestDTO mappedLabTest = _mapper.Map<LabTestDTO>(updateLabTest);
+                LabTestDTO mappedLabTest = _mapper.Map<LabTestDTO>(updatedLabTest);
                 return Ok(mappedLabTest);
             }
             catch (Exception e)
@@ -151,5 +151,6 @@ namespace HospitalDataAPI.Controllers
                 return BadRequest(e.Message);
             }
         }
+      
     }
 }
