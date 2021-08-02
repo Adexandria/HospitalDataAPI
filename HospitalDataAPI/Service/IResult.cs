@@ -12,5 +12,6 @@ namespace HospitalDataAPI.Service
         Task<LabResult> GetLabResult(Guid patientId, Guid testId);
         Task AddLabResultId(Guid patientId,LabResult newLabResult);
         Task<LabResult> UpdateLabResultId(Guid patientId, Guid testId, LabResult updateLabResult);
+        Task DeleteLabResultById(Guid patientId, Guid testId);
     }
 }

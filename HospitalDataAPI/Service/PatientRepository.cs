@@ -46,7 +46,7 @@ namespace HospitalDataAPI.Service
             {
                 if (string.IsNullOrWhiteSpace(patientName)) throw new NullReferenceException(nameof(patientName));
 
-                var patient = dataDb.Patient.Where(s => s.LastName.Contains(patientName)).OrderBy(s=>s.PatientId).AsNoTracking();
+                var patient = dataDb.Patient.Where(s => s.LastName.StartsWith(patientName)).OrderBy(s=>s.PatientId).AsNoTracking();
                 //if (patient == null) throw new NullReferenceException(nameof(patient));
                 return patient;
             }

@@ -22,7 +22,7 @@ namespace HospitalDataAPI.Service
             {
                 if (patientId == null) throw new NullReferenceException(nameof(patientId));
                 if (string.IsNullOrWhiteSpace(code)) throw new NullReferenceException(nameof(code));
-                var labTest = await dataDb.LabTest.Where(s => s.PatientId == patientId).Where(s => s.Code.Code.Contains(code))
+                var labTest = await dataDb.LabTest.Where(s => s.PatientId == patientId).Where(s => s.Code.Code.StartsWith(code))
                     .Include(s=>s.Patient).Include(s=>s.Category).Include(s=>s.Code).AsNoTracking().FirstOrDefaultAsync();
                // if (labTest == null) throw new NullReferenceException(nameof(labTest));
                 return labTest;
@@ -42,7 +42,7 @@ namespace HospitalDataAPI.Service
                 if (patientId == null) throw new NullReferenceException(nameof(patientId));
                 if (labTestId == null) throw new NullReferenceException(nameof(labTestId));
                 var labTest = await dataDb.LabTest.Where(s => s.PatientId == patientId).Where(s => s.TestId == labTestId)
-                    .Include(s => s.Category).Include(s => s.Code).AsNoTracking().FirstOrDefaultAsync();
+                  .Include(s=>s.Patient).Include(s => s.Category).Include(s => s.Code).AsNoTracking().FirstOrDefaultAsync();
                 return labTest;
             }
             catch (Exception e)
@@ -59,7 +59,7 @@ namespace HospitalDataAPI.Service
             {
                 if (patientId == null) throw new NullReferenceException(nameof(patientId));
                 var labTests = dataDb.LabTest.Where(s => s.PatientId == patientId).OrderBy(s => s.TestId)
-                    .Include(s => s.Category).Include(s => s.Code).AsNoTracking();
+                   .Include(s=>s.Patient) .Include(s => s.Category).Include(s => s.Code).AsNoTracking();
                 return labTests;
             }
             catch (Exception e)
@@ -76,6 +76,7 @@ namespace HospitalDataAPI.Service
                 if (patientId == null) throw new NullReferenceException(nameof(patientId));
                 if (newLabTest == null) throw new NullReferenceException(nameof(newLabTest));
                 newLabTest.TestId = Guid.NewGuid();
+                newLabTest.PatientId = patientId;
                 await dataDb.LabTest.AddAsync(newLabTest);
                 await Save();
             }
@@ -108,6 +109,7 @@ namespace HospitalDataAPI.Service
                 throw e;
             }
         }
+      
 
         //Coding
         public IEnumerable<Coding> GetCodings
@@ -122,7 +124,7 @@ namespace HospitalDataAPI.Service
             try
             {
                 if (string.IsNullOrWhiteSpace(name)) throw new NullReferenceException(nameof(name));
-                return dataDb.Coding.Where(s => s.Text.Contains(name)).AsNoTracking();
+                return dataDb.Coding.Where(s => s.Text.StartsWith(name)).AsNoTracking();
             }
             catch (Exception e)
             {
@@ -145,7 +147,7 @@ namespace HospitalDataAPI.Service
             try
             {
                 if (string.IsNullOrWhiteSpace(name)) throw new NullReferenceException(nameof(name));
-                return dataDb.Category.Where(s => s.Code.Contains(name)).AsNoTracking();
+                return dataDb.Category.Where(s => s.Code.StartsWith(name)).AsNoTracking();
             }
             catch (Exception e)
             {

@@ -21,9 +21,13 @@ namespace HospitalDataAPI.Service
             {
                 if (patientId == null) throw new NullReferenceException(nameof(patientId));
                 var labResult = dataDb.LabResult.Where(s => s.PatientId == patientId)
-                    .Include(s=>s.Patient)
-                    .Include(s=>s.LabTest)
+                    .Include(s => s.Patient)
+                    .Include(s => s.LabTest)
                     .Include(s => s.Code)
+                    .Include(s => s.Category)
+                    .Include(s => s.LabTest.Category)
+                    .Include(s => s.LabTest.Code)
+                    .Include(s => s.LabTest.Patient)
                     .AsNoTracking();
                 //if (labResult == null) throw new NullReferenceException(nameof(labResult));
                 return labResult;
@@ -42,8 +46,13 @@ namespace HospitalDataAPI.Service
                 if (patientId == null) throw new NullReferenceException(nameof(patientId));
                 if (testId == null) throw new NullReferenceException(nameof(testId));
                 var labResult = await dataDb.LabResult.Where(s => s.PatientId == patientId).Where(s => s.TestId == testId).Include(s => s.Patient)
-                    .Include(s => s.LabTest).Include(s => s.Code).AsNoTracking().FirstOrDefaultAsync();
-               // if (labResult == null) throw new NullReferenceException(nameof(labResult));
+                    .Include(s => s.LabTest).Include(s => s.Code)
+                    .Include(s => s.Category)
+                    .Include(s => s.LabTest.Category)
+                    .Include(s => s.LabTest.Code)
+                    .Include(s => s.LabTest.Patient)
+                    .AsNoTracking().FirstOrDefaultAsync();
+               
                 return labResult;
             }
             catch (Exception e)
@@ -61,6 +70,7 @@ namespace HospitalDataAPI.Service
                 if (newLabResult == null) throw new NullReferenceException(nameof(newLabResult));
             
                 newLabResult.ResultId = Guid.NewGuid();
+                newLabResult.PatientId = patientId;
                 await dataDb.LabResult.AddAsync(newLabResult);
                 await Save();
             }
@@ -81,7 +91,7 @@ namespace HospitalDataAPI.Service
                
                 Update(currentLabResult, updateLabResult);
                 dataDb.Entry(currentLabResult).State = EntityState.Detached;
-                dataDb.Entry(updateLabResult).State = EntityState.Detached;
+                dataDb.Entry(updateLabResult).State = EntityState.Modified;
                 await Save();
                 return await GetLabResult(patientId, testId);
             }
@@ -90,6 +100,12 @@ namespace HospitalDataAPI.Service
 
                 throw e;
             }
+        }
+        public async Task DeleteLabResultById(Guid patientId,Guid testId)
+        {
+            var currentLabResult = await GetLabResult(patientId, testId);
+            dataDb.Entry(currentLabResult).State = EntityState.Deleted;
+            await Save();
         }
         private async Task Save() 
         {

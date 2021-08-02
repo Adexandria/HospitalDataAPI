@@ -111,7 +111,7 @@ namespace HospitalDataAPI.Service
             {
                 if (string.IsNullOrWhiteSpace(name)) throw new NullReferenceException(nameof(name));
 
-                var currentMedication = dataDb.Medication.Where(s => s.Display.Contains(name)).OrderBy(s => s.MedicationId);
+                var currentMedication = dataDb.Medication.Where(s => s.Display.StartsWith(name)).OrderBy(s => s.MedicationId);
                // if (currentMedication == null) throw new NullReferenceException(nameof(currentMedication));
                 return currentMedication;
             }
