@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using HospitalDataAPI.Model.DTO.LabDTO;
+using HospitalDataAPI.Model.LabModel;
 using HospitalDataAPI.Service;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
@@ -39,8 +40,8 @@ namespace HospitalDataAPI.Controllers
         [HttpGet("codings")]
         public ActionResult<IEnumerable<CodingDTO>> GetLabTestCodes() 
         {
-            var codes = _test.GetCodings;
-            var mappedCodes = _mapper.Map<IEnumerable<CodingDTO>>(codes);
+            IEnumerable<Coding> codes = _test.GetCodings;
+            IEnumerable<CodingDTO> mappedCodes = _mapper.Map<IEnumerable<CodingDTO>>(codes);
             return Ok(mappedCodes);
         }
 
@@ -50,14 +51,14 @@ namespace HospitalDataAPI.Controllers
         /// <remarks>
         ///     </remarks>
         ///     <returns>searched Lab Test Codes in the database</returns>
-        /// <response code="200">searched Lab Test Codes in the database</response>
+        /// <response code="200"> Lab Test Codes in the database</response>
         [ProducesResponseType(StatusCodes.Status200OK)]
         [Produces("application/json")]
         [HttpGet("codings/name")]
         public ActionResult<IEnumerable<CodingDTO>> GetLabTestCodesByName([FromQuery]string name)
         {
-            var codes = _test.GetCodingsByName(name);
-            var mappedCodes = _mapper.Map<IEnumerable<CodingDTO>>(codes);
+            IEnumerable<Coding> codes = _test.GetCodingsByName(name);
+            IEnumerable<CodingDTO> mappedCodes = _mapper.Map<IEnumerable<CodingDTO>>(codes);
             return Ok(mappedCodes);
         }
 
@@ -73,8 +74,8 @@ namespace HospitalDataAPI.Controllers
         [HttpGet("categories")]
         public ActionResult<IEnumerable<CategoryDTO>> GetLabTestCategory()
         {
-            var categories = _test.GetCategories;
-            var mappedCategories = _mapper.Map<IEnumerable<CategoryDTO>>(categories);
+            IEnumerable<Category> categories = _test.GetCategories;
+            IEnumerable<CategoryDTO> mappedCategories = _mapper.Map<IEnumerable<CategoryDTO>>(categories);
             return Ok(mappedCategories);
         }
 
@@ -84,14 +85,14 @@ namespace HospitalDataAPI.Controllers
         /// <remarks>
         ///     </remarks>
         ///     <returns>searched Lab Test Categories in the database</returns>
-        /// <response code="200">searched Lab Test Categories in the database</response> 
+        /// <response code="200">Lab Test Categories in the database</response> 
         [ProducesResponseType(StatusCodes.Status200OK)]
         [Produces("application/json")]
         [HttpGet("categories/name")]
         public ActionResult<IEnumerable<CategoryDTO>> GetLabTestCategoryByName([FromQuery] string name)
         {
-            var categories = _test.GetCategoryByName(name);
-            var mappedCategories = _mapper.Map<IEnumerable<CategoryDTO>>(categories);
+            IEnumerable<Category> categories = _test.GetCategoryByName(name);
+            IEnumerable<CategoryDTO> mappedCategories = _mapper.Map<IEnumerable<CategoryDTO>>(categories);
             return Ok(mappedCategories);
         }
     }

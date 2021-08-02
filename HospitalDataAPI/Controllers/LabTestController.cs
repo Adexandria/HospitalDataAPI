@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using HospitalDataAPI.Model.DTO.LabDTO;
 using HospitalDataAPI.Model.LabModel;
+using HospitalDataAPI.Model.PatientModel;
 using HospitalDataAPI.Service;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
@@ -38,10 +39,13 @@ namespace HospitalDataAPI.Controllers
         {
             try
             {
-                var currentPatient = _patient.GetPatientById(patientId).Result;
-                if (currentPatient == null) return NotFound("Patient not found");
-                var tests = _test.GetLabTestsById(patientId);
-                var mappedTests = _mapper.Map<IEnumerable<LabTestDTO>>(tests);
+                Patient currentPatient = _patient.GetPatientById(patientId).Result;
+                if (currentPatient == null) 
+                {
+                    return NotFound("Patient not found");
+                }
+                IEnumerable<LabTest> tests = _test.GetLabTestsById(patientId);
+                IEnumerable<LabTestDTO> mappedTests = _mapper.Map<IEnumerable<LabTestDTO>>(tests);
                 return Ok(mappedTests);
             }
             catch (Exception e)
@@ -56,11 +60,17 @@ namespace HospitalDataAPI.Controllers
         {
             try
             {
-                var currentPatient = await _patient.GetPatientById(patientId);
-                if (currentPatient == null) return NotFound("Patient not found");
-                var currentTest = await _test.GetLabTestById(patientId, testId);
-                if (currentTest == null) return NotFound("Test doesn't exist");
-                var mappedTest = _mapper.Map<LabTestDTO>(currentTest);
+                Patient currentPatient = await _patient.GetPatientById(patientId);
+                if (currentPatient == null) 
+                {
+                    return NotFound("Patient not found");
+                }
+                LabTest currentTest = await _test.GetLabTestById(patientId, testId);
+                if (currentTest == null)
+                {
+                    return NotFound("Test doesn't exist");
+                }
+                LabTestDTO mappedTest = _mapper.Map<LabTestDTO>(currentTest);
                 return Ok(mappedTest);
             }
             catch (Exception e)
@@ -70,15 +80,21 @@ namespace HospitalDataAPI.Controllers
             }
         }
         [HttpGet("code")]
-        public async Task<ActionResult<LabTestDTO>> SearchTestByCode(Guid patientId,string code)
+        public async Task<ActionResult<LabTestDTO>> GetTestByCode(Guid patientId,string code)
         {
             try
             {
-                var currentPatient = await _patient.GetPatientById(patientId);
-                if (currentPatient == null) return NotFound("Patient not found");
-                var currentTest = await _test.GetLabTestByCode(patientId, code);
-                if (currentTest == null) return NotFound("Test doesn't exist");
-                var mappedTest = _mapper.Map<LabTestDTO>(currentTest);
+                Patient currentPatient = await _patient.GetPatientById(patientId);
+                if (currentPatient == null) 
+                {
+                    return NotFound("Patient not found");
+                }
+                LabTest currentTest = await _test.GetLabTestByCode(patientId, code);
+                if (currentTest == null)
+                {
+                    return NotFound("Test doesn't exist");
+                }
+                LabTestDTO mappedTest = _mapper.Map<LabTestDTO>(currentTest);
                 return Ok(mappedTest);
             }
             catch (Exception e)
@@ -92,9 +108,12 @@ namespace HospitalDataAPI.Controllers
         {
             try
             {
-                var currentPatient = await _patient.GetPatientById(patientId);
-                if (currentPatient == null) return NotFound("user not found");
-                var newLabTest = _mapper.Map<LabTest>(labTest);
+                Patient currentPatient = await _patient.GetPatientById(patientId);
+                if (currentPatient == null)
+                {
+                    return NotFound("user not found");
+                }
+                LabTest newLabTest = _mapper.Map<LabTest>(labTest);
                 await _test.AddLabTestById(patientId, newLabTest);
                 return Ok("Successful");
             }
@@ -109,15 +128,21 @@ namespace HospitalDataAPI.Controllers
         {
             try
             {
-                var currentPatient = await _patient.GetPatientById(patientId);
-                if (currentPatient == null) return NotFound("Patient not found");
+                Patient currentPatient = await _patient.GetPatientById(patientId);
+                if (currentPatient == null) 
+                {
+                    return NotFound("Patient not found");
+                }
 
-                var currentTest = await _test.GetLabTestById(patientId, labTest.TestId);
-                if (currentTest == null) return NotFound("Test doesn't exist");
+                LabTest currentTest = await _test.GetLabTestById(patientId, labTest.TestId);
+                if (currentTest == null)
+                {
+                    return NotFound("Test doesn't exist");
+                }
 
-                var updateLabTest = _mapper.Map<LabTest>(labTest);
-                var updatedLabTest = await _test.UpdateLabTestById(patientId, updateLabTest);
-                var mappedLabTest = _mapper.Map<LabTestDTO>(updateLabTest);
+                LabTest updateLabTest = _mapper.Map<LabTest>(labTest);
+                LabTest updatedLabTest = await _test.UpdateLabTestById(patientId, updateLabTest);
+                LabTestDTO mappedLabTest = _mapper.Map<LabTestDTO>(updateLabTest);
                 return Ok(mappedLabTest);
             }
             catch (Exception e)

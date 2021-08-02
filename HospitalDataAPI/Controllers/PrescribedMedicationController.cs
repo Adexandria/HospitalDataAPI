@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using HospitalDataAPI.Model.DTO.Medications;
 using HospitalDataAPI.Model.MedicationModel;
+using HospitalDataAPI.Model.PatientModel;
 using HospitalDataAPI.Service;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
@@ -40,10 +41,14 @@ namespace HospitalDataAPI.Controllers
         {
             try
             {
-                var currentPatient = await _patient.GetPatientById(patientId);
-                if (currentPatient == null) return NotFound("Patient not found");
-                var currentMeds = _medication.GetMedicationsById(patientId);
-                var mappedMeds = _mapper.Map<IEnumerable<PrescribedMedsDTO>>(currentMeds);
+                Patient currentPatient = await _patient.GetPatientById(patientId);
+                if (currentPatient == null)
+                {
+                    return NotFound("Patient not found");
+                }
+
+                IEnumerable<PrescribedMedication> currentMeds = _medication.GetMedicationsById(patientId);
+                IEnumerable<PrescribedMedsDTO> mappedMeds = _mapper.Map<IEnumerable<PrescribedMedsDTO>>(currentMeds);
                 return Ok(mappedMeds);
             }
             catch (Exception e)
@@ -58,11 +63,19 @@ namespace HospitalDataAPI.Controllers
         {
             try
             {
-                var currentPatient = await _patient.GetPatientById(patientId);
-                if (currentPatient == null) return NotFound("Patient not found");
-                var currentMeds = await _medication.GetMedicationById(patientId,prescribedId);
-                if (currentMeds == null) return NotFound();
-                var mappedMeds = _mapper.Map<PrescribedMedsDTO>(currentMeds);
+                Patient currentPatient = await _patient.GetPatientById(patientId);
+                if (currentPatient == null)
+                { 
+                    return 
+                    NotFound("Patient not found"); 
+                }
+
+                PrescribedMedication currentMeds = await _medication.GetMedicationById(patientId,prescribedId);
+                if (currentMeds == null)
+                { 
+                    return NotFound();
+                }
+                PrescribedMedsDTO mappedMeds = _mapper.Map<PrescribedMedsDTO>(currentMeds);
                 return Ok(mappedMeds);
             }
             catch (Exception e)
@@ -73,13 +86,16 @@ namespace HospitalDataAPI.Controllers
 
         }
         [HttpPost]
-        public async Task<ActionResult<PrescribedMedsDTO>> AddPatientMedication (Guid patientId,PrescribedMedsCreate patientMedication) 
+        public async Task<ActionResult> AddPatientMedication (Guid patientId,PrescribedMedsCreate patientMedication) 
         {
             try
             {
-                var currentPatient = await _patient.GetPatientById(patientId);
-                if (currentPatient == null) return NotFound("Patient not found");
-                var mappedMedication = _mapper.Map<PrescribedMedication>(patientMedication);
+                Patient currentPatient = await _patient.GetPatientById(patientId);
+                if (currentPatient == null) 
+                { 
+                    return NotFound("Patient not found"); 
+                }
+                PrescribedMedication mappedMedication = _mapper.Map<PrescribedMedication>(patientMedication);
                 await _medication.AddMedicationById(patientId, mappedMedication);
                 return Ok("Successful");
             }
@@ -96,13 +112,19 @@ namespace HospitalDataAPI.Controllers
         {
             try
             {
-                var currentPatient = await _patient.GetPatientById(patientId);
-                if (currentPatient == null) return NotFound("Patient doesn't exist");
-                var currentMedication = await _medication.GetMedicationById(patientId, patientMedication.PrescribedId);
-                if (currentMedication == null) return NotFound("Prescribed Medication doesn't exist");
-                var mappedmedication = _mapper.Map<PrescribedMedication>(patientMedication);
-                var medication = await _medication.UpdateMedicationById(patientId, mappedmedication);
-                var mappedPrescription = _mapper.Map<PrescribedMedsDTO>(medication);
+                Patient currentPatient = await _patient.GetPatientById(patientId);
+                if (currentPatient == null)
+                {
+                    return NotFound("Patient doesn't exist");
+                }
+                PrescribedMedication currentMedication = await _medication.GetMedicationById(patientId, patientMedication.PrescribedId);
+                if (currentMedication == null)
+                {
+                    return NotFound("Prescribed Medication doesn't exist");
+                }
+                PrescribedMedication mappedmedication = _mapper.Map<PrescribedMedication>(patientMedication);
+                PrescribedMedication medication = await _medication.UpdateMedicationById(patientId, mappedmedication);
+                PrescribedMedsDTO mappedPrescription = _mapper.Map<PrescribedMedsDTO>(medication);
                 return Ok(mappedPrescription);
 
             }

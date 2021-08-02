@@ -1,15 +1,14 @@
 ﻿using AutoMapper;
 using HospitalDataAPI.Model.DTO.LabDTO;
 using HospitalDataAPI.Model.LabModel;
+using HospitalDataAPI.Model.PatientModel;
 using HospitalDataAPI.Service;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 
@@ -40,10 +39,13 @@ namespace HospitalDataAPI.Controllers
         {
             try
             {
-                var currentPatient =  _patient.GetPatientById(patientId).Result;
-                if (currentPatient == null) return NotFound("Patient not found");
-                var patientResults = _result.GetLabResultsById(patientId);
-                var mappedResults = _mapper.Map<IEnumerable<LabResultDTO>>(patientResults);
+                Patient currentPatient =  _patient.GetPatientById(patientId).Result;
+                if (currentPatient == null)
+                {
+                    return NotFound("Patient not found");
+                }
+                IEnumerable<LabResult> patientResults = _result.GetLabResultsById(patientId);
+                IEnumerable<LabResultDTO> mappedResults = _mapper.Map<IEnumerable<LabResultDTO>>(patientResults);
                 return Ok(mappedResults);
             }
             catch (Exception e)
@@ -57,10 +59,13 @@ namespace HospitalDataAPI.Controllers
         {
             try
             {
-                var currentPatient = await _patient.GetPatientById(patientId);
-                if (currentPatient == null) return NotFound("Patient not found");
-                var patientResult = await _result.GetLabResult(patientId, testId);
-                var mappedResult = _mapper.Map<IEnumerable<LabResultDTO>>(patientResult);
+                Patient currentPatient = await _patient.GetPatientById(patientId);
+                if (currentPatient == null)
+                { 
+                    return NotFound("Patient not found"); 
+                }
+                LabResult patientResult = await _result.GetLabResult(patientId, testId);
+                LabResultDTO mappedResult = _mapper.Map<LabResultDTO>(patientResult);
                 return Ok(mappedResult);
             }
             catch (Exception e)
@@ -74,9 +79,12 @@ namespace HospitalDataAPI.Controllers
         {
             try
             {
-                var currentPatient = await _patient.GetPatientById(patientId);
-                if (currentPatient == null) return NotFound("Patient not found");
-                var newLabResult = _mapper.Map<LabResult>(labResult);
+                Patient currentPatient = await _patient.GetPatientById(patientId);
+                if (currentPatient == null)
+                {
+                    return NotFound("Patient not found");
+                }
+                LabResult newLabResult = _mapper.Map<LabResult>(labResult);
                 await _result.AddLabResultId(patientId,newLabResult);
                 return Ok("Successful");
             }
@@ -91,13 +99,18 @@ namespace HospitalDataAPI.Controllers
         {
             try
             {
-                var currentPatient = await _patient.GetPatientById(patientId);
-                if (currentPatient == null) return NotFound("Patient not found");
-                var currentLabResult = await _result.GetLabResult(patientId, testId);
-                if(currentLabResult ==null) return NotFound("Lab result doesn't exist");
-                var newLabResult = _mapper.Map<LabResult>(labResult);
-                var updatedLabResult = await _result.UpdateLabResultId(patientId,testId,newLabResult);
-                var mappedResult = _mapper.Map<LabResultDTO>(updatedLabResult);
+                Patient currentPatient = await _patient.GetPatientById(patientId);
+                if (currentPatient == null) {
+                    return NotFound("Patient not found");
+                }
+                LabResult currentLabResult = await _result.GetLabResult(patientId, testId);
+                if (currentLabResult == null)
+                {
+                    return NotFound("Lab result doesn't exist");
+                }
+                LabResult newLabResult = _mapper.Map<LabResult>(labResult);
+                LabResult updatedLabResult = await _result.UpdateLabResultId(patientId,testId,newLabResult);
+                LabResultDTO mappedResult = _mapper.Map<LabResultDTO>(updatedLabResult);
                 return Ok(mappedResult);
             }
             catch (Exception e)

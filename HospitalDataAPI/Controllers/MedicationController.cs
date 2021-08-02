@@ -38,8 +38,8 @@ namespace HospitalDataAPI.Controllers
         {
             try
             {
-                var medications = _medication.GetMedications;
-                var mappedMedications = _mapper.Map<IEnumerable<MedicationDTO>>(medications);
+                IEnumerable<Medication> medications = _medication.GetMedications;
+                IEnumerable<MedicationDTO> mappedMedications = _mapper.Map<IEnumerable<MedicationDTO>>(medications);
                 return Ok(mappedMedications);
             }
             catch (Exception e)
@@ -53,8 +53,8 @@ namespace HospitalDataAPI.Controllers
         {
             try
             {
-                var medication = _medication.GetMedicationByName(name);
-                var mappedMedication = _mapper.Map<IEnumerable<MedicationDTO>>(medication);
+                IEnumerable<Medication> medication = _medication.GetMedicationByName(name);
+                IEnumerable<MedicationDTO> mappedMedication = _mapper.Map<IEnumerable<MedicationDTO>>(medication);
                 return Ok(mappedMedication);
             }
             catch (Exception e)
@@ -68,9 +68,12 @@ namespace HospitalDataAPI.Controllers
         {
             try
             {
-                var currentMedication = await _medication.GetMedicationById(medicationId);
-                if (currentMedication == null) return NotFound();
-                var mappedMedication = _mapper.Map<MedicationDTO>(currentMedication);
+                Medication currentMedication = await _medication.GetMedicationById(medicationId);
+                if (currentMedication == null)
+                { 
+                    return NotFound();
+                }
+                MedicationDTO mappedMedication = _mapper.Map<MedicationDTO>(currentMedication);
                 return Ok(mappedMedication);
             }
             catch (Exception e)
@@ -84,7 +87,7 @@ namespace HospitalDataAPI.Controllers
         {
             try
             {
-                var mappedmedication = _mapper.Map<Medication>(newMedication);
+                Medication mappedmedication = _mapper.Map<Medication>(newMedication);
                 await _medication.AddMedication(mappedmedication);
                 return Ok("Medication added successfully");
             }
@@ -99,11 +102,14 @@ namespace HospitalDataAPI.Controllers
         {
             try
             {
-                var currentMedication = await _medication.GetMedicationById(medicationId);
-                if (currentMedication == null) return NotFound();
-                var mappedMedication = _mapper.Map<Medication>(updateMedication);
-                var medication = await _medication.UpdateMedication(mappedMedication, medicationId);
-                var medicationDTO = _mapper.Map<MedicationDTO>(medication);
+                Medication currentMedication = await _medication.GetMedicationById(medicationId);
+                if (currentMedication == null)
+                {
+                    return NotFound();
+                }
+                Medication mappedMedication = _mapper.Map<Medication>(updateMedication);
+                Medication medication = await _medication.UpdateMedication(mappedMedication, medicationId);
+                MedicationDTO medicationDTO = _mapper.Map<MedicationDTO>(medication);
                 return Ok(medicationDTO);
             }
             catch (Exception e)
@@ -117,7 +123,10 @@ namespace HospitalDataAPI.Controllers
         public async Task<ActionResult> DeleteMedication(int medicationId) 
         {
             var currentMedication = _medication.GetMedicationById(medicationId);
-            if (currentMedication == null) return NotFound();
+            if (currentMedication == null)
+            {
+                return NotFound();
+            }
             await _medication.DeleteMedication(medicationId);
             return Ok("Successful");
         }

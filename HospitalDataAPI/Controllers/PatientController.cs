@@ -37,8 +37,8 @@ namespace HospitalDataAPI.Controllers
         {
             try
             {
-                var patients = _patient.GetPatients;
-                var mappedPatients = _mapper.Map<IEnumerable<PatientsDTO>>(patients);
+                IEnumerable<Patient> patients = _patient.GetPatients;
+                IEnumerable<PatientsDTO> mappedPatients = _mapper.Map<IEnumerable<PatientsDTO>>(patients);
                 return Ok(mappedPatients);
             }
             catch (Exception e)
@@ -53,9 +53,12 @@ namespace HospitalDataAPI.Controllers
         {
             try
             {
-                var patient = await _patient.GetPatientById(patientId);
-                if (patient == null) return NotFound("Patient doesn't exist");
-                var mappedPatient = _mapper.Map<PatientDTO>(patient);
+                Patient patient = await _patient.GetPatientById(patientId);
+                if (patient == null)
+                {
+                    return NotFound("Patient doesn't exist");
+                }
+                PatientDTO mappedPatient = _mapper.Map<PatientDTO>(patient);
                 return Ok(mappedPatient);
             }
             catch (Exception e)
@@ -69,8 +72,8 @@ namespace HospitalDataAPI.Controllers
         {
             try
             {
-                var currentPatients = _patient.GetPatientByName(lastName);
-                var mappedPatient = _mapper.Map<IEnumerable<PatientsDTO>>(currentPatients);
+                IEnumerable<Patient> currentPatients = _patient.GetPatientByName(lastName);
+                IEnumerable<PatientsDTO> mappedPatient = _mapper.Map<IEnumerable<PatientsDTO>>(currentPatients);
                 return Ok(mappedPatient);
             }
             catch (Exception e)
@@ -84,7 +87,7 @@ namespace HospitalDataAPI.Controllers
         {
             try
             {
-                var mappedPatient = _mapper.Map<Patient>(newPatient);
+                Patient mappedPatient = _mapper.Map<Patient>(newPatient);
                 await _patient.AddPatient(mappedPatient);
                 return Ok("Patient successfully added");
             }
@@ -113,11 +116,13 @@ namespace HospitalDataAPI.Controllers
         {
             try
             {
-                var currentPatient = await _patient.GetPatientById(patientId);
-                if (currentPatient == null) return NotFound();
-                var mappedPatient = _mapper.Map<Patient>(updatePatient);
-                var patient = await _patient.UpdatePatient(mappedPatient,patientId);
-                var currentPatientDTO = _mapper.Map<PatientDTO>(patient);
+                Patient currentPatient = await _patient.GetPatientById(patientId);
+                if (currentPatient == null) {
+                    return NotFound();
+                }
+                Patient mappedPatient = _mapper.Map<Patient>(updatePatient);
+                Patient patient = await _patient.UpdatePatient(mappedPatient,patientId);
+                PatientDTO currentPatientDTO = _mapper.Map<PatientDTO>(patient);
                 return Ok(currentPatientDTO);
 
             }

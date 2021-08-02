@@ -6,6 +6,7 @@ using System.IdentityModel.Tokens.Jwt;
 using Microsoft.AspNetCore.Authorization;
 using System.Net;
 using Swashbuckle.AspNetCore.Annotations;
+using Microsoft.IdentityModel.Tokens;
 
 namespace HospitalDataAPI.Controllers
 {
@@ -29,10 +30,10 @@ namespace HospitalDataAPI.Controllers
         {
             try
             {
-                var signingCredentials = _credential.GetSigningCredentials();
-                var tokenOptions = _credential.GenerateTokenOptions(signingCredentials);
-                var token = new JwtSecurityTokenHandler().WriteToken(tokenOptions);
-                var accessToken = new TokenDTO() { AccessToken = token };
+                SigningCredentials signingCredentials = _credential.GetSigningCredentials();
+                JwtSecurityToken tokenOptions = _credential.GenerateTokenOptions(signingCredentials);
+                string token = new JwtSecurityTokenHandler().WriteToken(tokenOptions);
+                TokenDTO accessToken = new TokenDTO() { AccessToken = token };
                 return Ok(accessToken);
             }
             catch (Exception e)
