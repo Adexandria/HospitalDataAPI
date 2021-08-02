@@ -17,6 +17,8 @@ namespace HospitalDataAPI.Model.DTO.LabDTO
         public int CodeId { get; set; }
         [Required(ErrorMessage = "Enter Category Id")]
         public int CategoryId { get; set; }
+        [Required(ErrorMessage = "Enter Test Id")]
+        public Guid TestId { get; set; }
 
 
     }
