@@ -20,7 +20,7 @@
             <remarks>
                 </remarks>
                 <returns>searched Lab Test Codes in the database</returns>
-            <response code="200">searched Lab Test Codes in the database</response>
+            <response code="200"> Lab Test Codes in the database</response>
         </member>
         <member name="M:HospitalDataAPI.Controllers.LibraryController.GetLabTestCategory">
             <summary>
@@ -38,7 +38,7 @@
             <remarks>
                 </remarks>
                 <returns>searched Lab Test Categories in the database</returns>
-            <response code="200">searched Lab Test Categories in the database</response> 
+            <response code="200">Lab Test Categories in the database</response> 
         </member>
         <member name="M:HospitalDataAPI.Controllers.PatientController.UpdatePatient(System.Guid,HospitalDataAPI.Model.DTO.Patients.PatientUpdate)">
             <summary>
