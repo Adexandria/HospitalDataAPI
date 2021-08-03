@@ -95,6 +95,11 @@ namespace HospitalDataAPI.Controllers
                 { 
                     return NotFound("Patient not found"); 
                 }
+                Medication medication = await _medication.GetMedicationById(patientMedication.MedicationId);
+                if(medication == null)
+                {
+                    return NotFound("Medication doesn't exist");
+                }
                 PrescribedMedication mappedMedication = _mapper.Map<PrescribedMedication>(patientMedication);
                 await _medication.AddMedicationById(patientId, mappedMedication);
                 return Ok("Successful");
@@ -117,8 +122,13 @@ namespace HospitalDataAPI.Controllers
                 {
                     return NotFound("Patient doesn't exist");
                 }
-                PrescribedMedication currentMedication = await _medication.GetMedicationById(patientId, patientMedication.PrescribedId);
+                Medication currentMedication = await _medication.GetMedicationById(patientMedication.MedicationId);
                 if (currentMedication == null)
+                {
+                    return NotFound("Medication doesn't exist");
+                }
+                PrescribedMedication currentPrescribedMedication = await _medication.GetMedicationById(patientId, patientMedication.PrescribedId);
+                if (currentPrescribedMedication == null)
                 {
                     return NotFound("Prescribed Medication doesn't exist");
                 }

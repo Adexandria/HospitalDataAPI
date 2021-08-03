@@ -17,9 +17,11 @@ namespace HospitalDataAPI.Service
         //Coding
         IEnumerable<Coding> GetCodings { get; }
         IEnumerable<Coding> GetCodingsByName(string name);
+        Task<Coding> GetCodingById(int labCodeId);
 
         //Category
         IEnumerable<Category> GetCategories { get; }
         IEnumerable<Category> GetCategoryByName(string name);
+        Task<Category> GetCategoryById(int labCategoryId);
     }
 }

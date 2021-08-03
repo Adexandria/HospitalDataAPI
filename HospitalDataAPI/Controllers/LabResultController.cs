@@ -27,11 +27,13 @@ namespace HospitalDataAPI.Controllers
         readonly IMapper _mapper;
         readonly IPatient _patient;
         readonly IResult _result;
-        public LabResultController(IMapper _mapper, IPatient _patient, IResult _result)
+        readonly ITest _test;
+        public LabResultController(IMapper _mapper, IPatient _patient, IResult _result, ITest _test)
         {
             this._mapper = _mapper;
             this._patient = _patient;
             this._result = _result;
+            this._test = _test;
         }
 
         [HttpGet]
@@ -54,17 +56,42 @@ namespace HospitalDataAPI.Controllers
                 return BadRequest(e.Message);
             }
         }
-        [HttpGet("{testId}")]
-        public async Task<ActionResult<LabResultDTO>> SearchPatientResultByTestId(Guid patientId, Guid testId) 
+        [HttpGet("testId")]
+        public ActionResult<IEnumerable<LabResultDTO>> GetPatientResultByTestId(Guid patientId, [FromQuery]Guid testId) 
+        {
+            try
+            {
+                Patient currentPatient =  _patient.GetPatientById(patientId).Result;
+                if (currentPatient == null)
+                { 
+                    return NotFound("Patient not found"); 
+                }
+                LabTest currentLabTest = _test.GetLabTestById(patientId, testId).Result;
+                if(currentLabTest == null)
+                {
+                    return NotFound("Labtest not found");
+                }
+                IEnumerable<LabResult> patientResult = _result.GetLabResultsByTestId(patientId, testId);
+                IEnumerable<LabResultDTO> mappedResult = _mapper.Map<IEnumerable<LabResultDTO>>(patientResult);
+                return Ok(mappedResult);
+            }
+            catch (Exception e)
+            {
+
+                return BadRequest(e.Message);
+            }
+        }
+        [HttpGet("{resultId}")]
+        public async Task<ActionResult<LabResultDTO>>GetPatientById(Guid patientId,Guid resultId)
         {
             try
             {
                 Patient currentPatient = await _patient.GetPatientById(patientId);
                 if (currentPatient == null)
-                { 
-                    return NotFound("Patient not found"); 
+                {
+                    return NotFound("Patient not found");
                 }
-                LabResult patientResult = await _result.GetLabResult(patientId, testId);
+                LabResult patientResult = await _result.GetLabResultById(patientId, resultId);
                 LabResultDTO mappedResult = _mapper.Map<LabResultDTO>(patientResult);
                 return Ok(mappedResult);
             }
@@ -84,6 +111,11 @@ namespace HospitalDataAPI.Controllers
                 {
                     return NotFound("Patient not found");
                 }
+                LabTest currentLabTest = await _test.GetLabTestById(patientId, labResult.TestId);
+                if (currentLabTest == null)
+                {
+                    return NotFound("Labtest not found");
+                }            
                 LabResult newLabResult = _mapper.Map<LabResult>(labResult);
                 await _result.AddLabResultId(patientId,newLabResult);
                 return Ok("Successful");
@@ -104,7 +136,12 @@ namespace HospitalDataAPI.Controllers
                 {
                     return NotFound("Patient not found");
                 }
-                LabResult currentLabResult = await _result.GetLabResult(patientId, testId);
+                LabTest currentLabTest = await _test.GetLabTestById(patientId,testId);
+                if (currentLabTest == null)
+                {
+                    return NotFound("Labtest not found");
+                }
+                LabResult currentLabResult = await _result.GetLabResultById(patientId,labResult.ResultId);
                 if (currentLabResult == null)
                 {
                     return NotFound("Lab result doesn't exist");
@@ -120,8 +157,8 @@ namespace HospitalDataAPI.Controllers
                 return BadRequest(e.Message);
             }
         }
-        [HttpDelete("{testId}")]
-        public async Task<ActionResult> DeletePatientResult(Guid patientId,Guid testId)
+        [HttpDelete("{resultId}")]
+        public async Task<ActionResult> DeletePatientResult(Guid patientId,Guid resultId)
         {
             try
             {
@@ -130,12 +167,12 @@ namespace HospitalDataAPI.Controllers
                 {
                     return NotFound("Patient not found");
                 }
-                LabResult labResult = await _result.GetLabResult(patientId, testId);
+                LabResult labResult = await _result.GetLabResultById(patientId,resultId);
                 if(labResult == null) 
                 {
                     return NotFound("Lab result not found");
                 }
-                await _result.DeleteLabResultById(patientId, testId);
+                await _result.DeleteLabResultById(patientId, resultId);
                 return Ok("Successful");
             }
             catch (Exception e)

@@ -133,6 +133,11 @@ namespace HospitalDataAPI.Service
             }
             
         }
+        public  async Task<Coding> GetCodingById(int labCodeId)
+        {
+            var labCode = await dataDb.Coding.Where(s => s.TestCodeId == labCodeId).AsNoTracking().FirstOrDefaultAsync();
+            return labCode;
+        }
 
         //Category
         public IEnumerable<Category> GetCategories
@@ -155,6 +160,12 @@ namespace HospitalDataAPI.Service
                 throw e;
             }
             
+        }
+
+        public async Task<Category> GetCategoryById(int labCategoryId)
+        {
+            var labCategory =await  dataDb.Category.Where(s => s.CategoryId == labCategoryId).AsNoTracking().FirstOrDefaultAsync();
+            return labCategory;
         }
 
         private async Task Save() 
@@ -181,5 +192,9 @@ namespace HospitalDataAPI.Service
             }
            
         }
+
+       
+
+        
     }
 }

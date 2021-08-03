@@ -13,10 +13,6 @@ namespace HospitalDataAPI.Model.DTO.LabDTO
         ///<example>5.0-8.0</example>
         [Required(ErrorMessage = "Enter reference range")]
         public string ReferenceRange { get; set; }
-        [Required(ErrorMessage = "Enter Code Id")]
-        public int CodeId { get; set; }
-        [Required(ErrorMessage = "Enter Category Id")]
-        public int CategoryId { get; set; }
         [Required(ErrorMessage = "Enter Test Id")]
         public Guid TestId { get; set; }
 

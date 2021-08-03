@@ -67,14 +67,8 @@
         <member name="P:HospitalDataAPI.Model.DTO.LabDTO.LabTestUpdate.Status">
             <example>pending</example>
         </member>
-        <member name="P:HospitalDataAPI.Model.DTO.Medications.PrescribedMedsCreate.Date">
-            <example>0001-01-01</example>
-        </member>
         <member name="P:HospitalDataAPI.Model.DTO.Medications.PrescribedMedsCreate.Status">
             <example>active</example>
-        </member>
-        <member name="P:HospitalDataAPI.Model.DTO.Medications.PrescribedMedsUpdate.Date">
-            <example>0001-01-01</example>
         </member>
         <member name="P:HospitalDataAPI.Model.DTO.Medications.PrescribedMedsUpdate.Status">
             <example>active</example>

@@ -40,8 +40,6 @@ namespace HospitalDataAPI.Service
                 if (patientId == null) throw new NullReferenceException(nameof(patientId));
                 if (newPrescribed == null) throw new NullReferenceException(nameof(newPrescribed));
 
-                //  var prescribed = dataDb.PrescribedMedication.Where(s => s.PatientId == patientId);
-                // if (prescribed == null) throw new NullReferenceException(nameof(prescribed));
                 newPrescribed.PrescribedId = Guid.NewGuid();
                 newPrescribed.PatientId = patientId;
                 await dataDb.PrescribedMedication.AddAsync(newPrescribed);
@@ -205,10 +203,6 @@ namespace HospitalDataAPI.Service
             if (updatemedication.Status.ToString() == "Active") 
             {
                 updatemedication.Status = currentMedication.Status;
-            }
-            if(updatemedication.Date.Date == new DateTime(0001, 1, 01))
-            {
-                updatemedication.Date = currentMedication.Date;
             }
 
         }

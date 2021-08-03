@@ -113,6 +113,16 @@ namespace HospitalDataAPI.Controllers
                 {
                     return NotFound("user not found");
                 }
+                Coding labCode = await _test.GetCodingById(labTest.CodeId);
+                if(labCode == null)
+                {
+                    return NotFound("Lab code doesn't exist");
+                }
+                Category labCategory = await _test.GetCategoryById(labTest.CategoryId);
+                if(labCategory == null)
+                {
+                    return NotFound("Lab category doesn't exist");
+                }
                 LabTest newLabTest = _mapper.Map<LabTest>(labTest);
                 await _test.AddLabTestById(patientId, newLabTest);
                 return Ok("Successful");

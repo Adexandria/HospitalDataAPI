@@ -122,7 +122,7 @@ namespace HospitalDataAPI.Controllers
         [HttpDelete("{medicationId}")]
         public async Task<ActionResult> DeleteMedication(int medicationId) 
         {
-            var currentMedication = _medication.GetMedicationById(medicationId);
+            var currentMedication = await _medication.GetMedicationById(medicationId);
             if (currentMedication == null)
             {
                 return NotFound();
