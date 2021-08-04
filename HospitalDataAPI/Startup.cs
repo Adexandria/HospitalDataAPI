@@ -66,9 +66,9 @@ namespace HospitalDataAPI
             {
                 setupAction.SwaggerDoc("HospitalDataAPISpecification", new OpenApiInfo()
                 {
-                    Title = "HospitalData Api",
+                    Title = "HospitalData API",
                     Version = "1.0",
-                    Description = "A Restful API that is used to organize patients data",
+                    Description = "A Restful API Database Management System",
                     Contact = new OpenApiContact()
                     {
                         Email = "adeolaaderibigbe09@gmail.com",
