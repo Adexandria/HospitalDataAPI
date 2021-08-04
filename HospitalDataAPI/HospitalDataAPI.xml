@@ -4,6 +4,137 @@
         <name>HospitalDataAPI</name>
     </assembly>
     <members>
+        <member name="M:HospitalDataAPI.Controllers.LabResultController.GetPatientResults(System.Guid)">
+            <summary>
+            Get Patient Lab Results
+            </summary>
+            <param name="patientId">Patient Id</param>
+            <returns> Patient Lab Results</returns>
+            <response code="200">Patient Lab Results</response>
+            <response code = "400"> Bad request</response>
+            <response code="404">Not Found</response>
+            <response code="401">Unauthorized</response>
+        </member>
+        <member name="M:HospitalDataAPI.Controllers.LabResultController.GetPatientResultsByTestId(System.Guid,System.Guid)">
+            <summary>
+            Get Patient Lab Result By Lab Test Id
+            </summary>
+            <param name="patientId">Patient Id</param>
+            <param name="testId"> Lab Result Id</param>
+            <returns>Patient Lab Results</returns> 
+            <response code="200">Patient Lab Results</response>
+            <response code = "400"> Bad request</response>
+            <response code="404">Not Found</response>
+            <response code="401">Unauthorized</response>
+        </member>
+        <member name="M:HospitalDataAPI.Controllers.LabResultController.GetPatientResultById(System.Guid,System.Guid)">
+            <summary>
+            Get Patient Lab Result By Lab Result Id
+            </summary>
+            <param name="patientId">Patient Id</param>
+            <param name="resultId">Lab Result Id</param>
+            <returns>Patient Lab Result</returns>
+            <response code="200">Patient Lab Result</response>
+            <response code = "400"> Bad request</response>
+            <response code="404">Not Found</response>
+            <response code="401">Unauthorized</response>
+        </member>
+        <member name="M:HospitalDataAPI.Controllers.LabResultController.AddPatientResult(System.Guid,HospitalDataAPI.Model.DTO.LabDTO.LabResultCreate)">
+            <summary>
+            Add Patient Lab Result
+            </summary>
+            <param name="patientId">patient id</param>
+            <param name="labResult">Create Model of Lab Result Model</param>
+            <returns>Successful</returns>
+            <response code="200">Successful</response>
+            <response code = "400"> Bad request</response>
+            <response code="404">Not Found</response>
+            <response code="401">Unauthorized</response>
+        </member>
+        <member name="M:HospitalDataAPI.Controllers.LabResultController.UpdatePatientResult(System.Guid,System.Guid,HospitalDataAPI.Model.DTO.LabDTO.LabResultUpdate)">
+            <summary>
+            Update Patient Lab Result 
+            </summary>
+            <param name="patientId">Patient Id</param>
+            <param name="testId">Test Id</param>
+            <param name="labResult">Update Model of Lab Result Model</param>
+            <returns>Updated Patient Lab Result</returns>
+            <response code="200">Patient Lab Result</response>
+            <response code = "400"> Bad request</response>
+            <response code="404">Not Found</response>
+            <response code="401">Unauthorized</response>
+        </member>
+        <member name="M:HospitalDataAPI.Controllers.LabResultController.DeletePatientResult(System.Guid,System.Guid)">
+            <summary>
+            Delete Lab Result By Lab Result Id
+            </summary>
+            <param name="patientId">Patient Id</param>
+            <param name="resultId">Lab Result Id</param>
+            <returns>Successful</returns>
+            <response code="200">Successful</response>
+            <response code = "400"> Bad request</response>
+            <response code="404">Not Found</response>
+            <response code="401">Unauthorized</response>
+        </member>
+        <member name="M:HospitalDataAPI.Controllers.LabTestController.GetPatientTests(System.Guid)">
+            <summary>
+            Get Patient Lab Tests
+            </summary>
+            <param name="patientId">Patient Id</param>
+            <returns>Patient Lab Tests</returns>
+            <response code="200">Patient Lab Tests</response>
+            <response code = "400"> Bad request</response>
+            <response code="404">Not Found</response>
+            <response code="401">Unauthorized</response>
+        </member>
+        <member name="M:HospitalDataAPI.Controllers.LabTestController.GetTestById(System.Guid,System.Guid)">
+            <summary>
+            Get Lab Test By Lab Test Id
+            </summary>
+            <param name="patientId">Patient Id</param>
+            <param name="testId">Lab Test Id</param>
+            <returns>Patient Lab test</returns>
+            <response code="200">Patient Lab Test</response>
+            <response code = "400"> Bad request</response>
+            <response code="404">Not Found</response>
+            <response code="401">Unauthorized</response>
+        </member>
+        <member name="M:HospitalDataAPI.Controllers.LabTestController.GetTestsByCode(System.Guid,System.String)">
+            <summary>
+            Get Lab Tests By Lab Code
+            </summary>
+            <param name="patientId">Patient Id</param>
+            <param name="code">Lab Code</param>
+            <returns>Patient Lab Tests</returns>     
+            <response code="200">Patient Lab Tests</response>
+            <response code = "400">Bad request</response>
+            <response code="404">Not Found</response>
+            <response code="401">Unauthorized</response>
+        </member>
+        <member name="M:HospitalDataAPI.Controllers.LabTestController.AddPatientTest(System.Guid,HospitalDataAPI.Model.DTO.LabDTO.LabTestCreate)">
+            <summary>
+            Add Patient Lab Test
+            </summary>
+            <param name="patientId">Patient Id</param>
+            <param name="labTest">Lab Test Create model</param> 
+            <returns>Successful</returns>
+            <response code="200">Successful</response>
+            <response code = "400"> Bad request</response>
+            <response code="404">Not Found</response>
+            <response code="401">Unauthorized</response>
+        </member>
+        <member name="M:HospitalDataAPI.Controllers.LabTestController.UpdatePatientTest(System.Guid,HospitalDataAPI.Model.DTO.LabDTO.LabTestUpdate)">
+            <summary>
+            Update Patient Lab Test
+            </summary>
+            <param name="patientId">patient Id</param>
+            <param name="labTest">Update Model for Patient Model</param>
+            <returns>Patient Lab Test</returns>
+            <response code="200">Patient Lab Test</response>
+            <response code = "400"> Bad request</response>
+            <response code="404">Not Found</response>
+            <response code="401">Unauthorized</response>
+        </member>
         <member name="M:HospitalDataAPI.Controllers.LibraryController.GetLabTestCodes">
             <summary>
             Get Lab Test Codes
@@ -40,17 +171,183 @@
                 <returns>searched Lab Test Categories in the database</returns>
             <response code="200">Lab Test Categories in the database</response> 
         </member>
+        <member name="M:HospitalDataAPI.Controllers.MedicationController.GetMedications">
+            <summary>
+            Get Medications
+            </summary>
+            <returns>Medications</returns>
+            <response code="200">Medications</response>
+            <response code = "400"> bad request</response>
+            <response code="404">Not Found</response>
+            <response code="401">Unauthorized</response>
+        </member>
+        <member name="M:HospitalDataAPI.Controllers.MedicationController.GetMedicationsByName(System.String)">
+            <summary>
+            Get Medications By Name
+            </summary>
+            <param name="name">Medication Name</param>
+            <returns>Medictations</returns>
+            <response code="200">Medications</response>
+            <response code = "400"> Bad request</response>
+            <response code="404">Not Found</response>
+            <response code="401">Unauthorized</response>
+        </member>
+        <member name="M:HospitalDataAPI.Controllers.MedicationController.GetMedicationById(System.Int32)">
+            <summary>
+            Get Medication By Medication Id
+            </summary>
+            <param name="medicationId"> Medication Id</param>
+            <returns>Medication Model</returns>
+            <response code="200">Medication Model</response>
+            <response code = "400"> Bad request</response>
+            <response code="404">Not Found</response>
+            <response code="401">Unauthorized</response>
+        </member>
+        <member name="M:HospitalDataAPI.Controllers.MedicationController.AddMedication(HospitalDataAPI.Model.DTO.Medications.MedicationCreate)">
+            <summary>
+            Add Medication
+            </summary>
+            <param name="newMedication">Create Model for Medication Model</param>
+            <returns>Successful</returns>
+            <response code="200">Successful</response>
+            <response code = "400"> Bad request</response>
+            <response code="404">Not Found</response>
+            <response code="401">Unauthorized</response>
+        </member>
+        <member name="M:HospitalDataAPI.Controllers.MedicationController.UpdateMedication(System.Int32,HospitalDataAPI.Model.DTO.Medications.MedicationUpdate)">
+            <summary>
+            Update Medication by Medication Id
+            </summary>
+            <param name="updateMedication">Update Model for Medication Model </param>
+            <param name="medicationId">Medication Id</param>
+            <returns>Mication Model</returns>
+            <response code="200">Medication Model</response>
+            <response code = "400"> Bad request</response>
+            <response code="404">Not Found</response>
+            <response code="401">Unauthorized</response>
+        </member>
+        <member name="M:HospitalDataAPI.Controllers.MedicationController.DeleteMedication(System.Int32)">
+            <summary>
+            Delete Medication By Medication Id
+            </summary>
+            <param name="medicationId">Medication Id</param>
+            <returns>Successful</returns>
+            <response code="200">Successful</response>
+            <response code = "400"> Bad request</response>
+            <response code="404">Not Found</response>
+            <response code="401">Unauthorized</response>
+        </member>
+        <member name="M:HospitalDataAPI.Controllers.PatientController.GetPatients">
+            <summary>
+            Get Patients
+            </summary>
+            <returns>Patients</returns>
+            <response code="200">Patients</response>
+            <response code = "400"> Bad request</response>
+            <response code="404">Not Found</response>
+            <response code="401">Unauthorized</response>
+        </member>
+        <member name="M:HospitalDataAPI.Controllers.PatientController.GetPatient(System.Guid)">
+            <summary>
+            Get Patient by Patient Id
+            </summary>
+            <param name="patientId">Patient Id</param>
+            <returns>Patient Model</returns>
+            <response code="200">Patient Model</response>
+            <response code = "400"> Bad request</response>
+            <response code="404">Not Found</response>
+            <response code="401">Unauthorized</response>
+        </member>
+        <member name="M:HospitalDataAPI.Controllers.PatientController.GetPatientByName(System.String)">
+            <summary>
+            Get Patients Name by Family Name
+            </summary>
+            <param name="lastName">Family Name Of The Patient </param>
+            <returns>Patients</returns>
+            <response code="200">Patients</response>
+            <response code = "400"> Bad request</response>
+            <response code="404">Not Found</response>
+            <response code="401">Unauthorized</response>
+        </member>
+        <member name="M:HospitalDataAPI.Controllers.PatientController.AddPatient(HospitalDataAPI.Model.DTO.Patients.PatientCreate)">
+            <summary>
+            Add Patient
+            </summary>
+            <param name="newPatient"> Create Model of the Patient Model</param>
+            <returns>Successful</returns>
+            <response code="200">Successful</response>
+            <response code = "400"> Bad request</response>
+            <response code="404">Not Found</response>
+            <response code="401">Unauthorized</response>
+        </member>
         <member name="M:HospitalDataAPI.Controllers.PatientController.UpdatePatient(System.Guid,HospitalDataAPI.Model.DTO.Patients.PatientUpdate)">
             <summary>
-            Update a patient Database.
+            Update Patient 
             </summary>
             <remarks>
                 </remarks>
                 <param name="patientId">Guid Id of the patient</param>
-                <param name="updatePatient">Update Model of the patient Model</param>
+                <param name="updatePatient">Update Model of the Patient Model</param>
                 <returns>An updated patient model</returns>
-            <response code="200">An updated patient model</response>
-            <response code="404">If the item is null</response>   
+            <response code="200">Updated Patient Model</response>
+            <response code = "400"> Bad request</response>
+            <response code="404">Not Found</response>
+            <response code="401">Unauthorized</response>
+        </member>
+        <member name="M:HospitalDataAPI.Controllers.PrescribedMedicationController.GetPatientMeds(System.Guid)">
+            <summary>
+            Get Patient Prescribed Medications
+            </summary>
+            <param name="patientId"> Patient Id</param>
+            <returns>Prescribed Medications</returns>
+            <response code="200">Prescribed Medications </response>
+            <response code = "400"> Bad request</response>
+            <response code="404">Not Found</response>
+            <response code="401">Unauthorized</response>
+        </member>
+        <member name="M:HospitalDataAPI.Controllers.PrescribedMedicationController.GetPatientMedById(System.Guid,System.Guid)">
+            <summary>
+            Get Patient Prescribed Medication by Id
+            </summary>
+            <param name="patientId">Patient Id</param>
+            <param name="prescribedId">Prescribed Medication Id</param>
+            <returns>Prescribed Medication Model</returns>
+            <response code="200">Prescribed Medication Model</response>
+            <response code = "400"> Bad request</response>
+            <response code="404">Not Found</response>
+            <response code="401">Unauthorized</response>
+        </member>
+        <member name="M:HospitalDataAPI.Controllers.PrescribedMedicationController.AddPatientMedication(System.Guid,HospitalDataAPI.Model.DTO.Medications.PrescribedMedsCreate)">
+            <summary>
+            Add Patient Prescribed Medication
+            </summary>
+            <param name="patientId">Patient Model</param>
+            <param name="patientMedication">Create Model for Prescribed Medication Model</param>
+            <returns>Successful</returns>
+            <response code="200">Successful</response>
+            <response code = "400"> Bad request</response>
+            <response code="404">Not Found</response>
+            <response code="401">Unauthorized</response>
+        </member>
+        <member name="M:HospitalDataAPI.Controllers.PrescribedMedicationController.UpdatePatientmedication(System.Guid,HospitalDataAPI.Model.DTO.Medications.PrescribedMedsUpdate)">
+            <summary>
+            Update Patient  Prescribed Medication
+            </summary>
+            <param name="patientId">Patient Id</param>
+            <param name="patientMedication">Update Model of Prescribed Medication</param>
+            <returns> Prescribed Medication </returns>
+            <response code="200">Updated Patient Medication Model</response>
+            <response code = "400"> Bad request</response>
+            <response code="404">Not Found</response>
+            <response code="401">Unauthorized</response>
+        </member>
+        <member name="M:HospitalDataAPI.Controllers.TokenController.GetAccessToken">
+            <summary>
+            Get AccessToken
+            </summary>
+            <returns>Access Token</returns>
+            <response code="200">Token Model</response>
+            <response code = "400"> Bad request</response>
         </member>
         <member name="P:HospitalDataAPI.Model.DTO.LabDTO.LabResultCreate.Status">
             <example>pending</example>
