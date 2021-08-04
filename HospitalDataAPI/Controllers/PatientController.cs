@@ -32,6 +32,19 @@ namespace HospitalDataAPI.Controllers
             this._patient = _patient;
         }
 
+        /// <summary>
+        /// Get Patients
+        /// </summary>
+        /// <returns>Patients</returns>
+        /// <response code="200">Patients</response>
+        /// <response code = "400"> Bad request</response>
+        /// <response code="404">Not Found</response>
+        /// <response code="401">Unauthorized</response>
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [Produces("application/json")]
         [HttpGet]
         public ActionResult<IEnumerable<PatientsDTO>> GetPatients()
         {
@@ -48,6 +61,21 @@ namespace HospitalDataAPI.Controllers
             }
 
         }
+
+        /// <summary>
+        /// Get Patient by Patient Id
+        /// </summary>
+        /// <param name="patientId">Patient Id</param>
+        /// <returns>Patient Model</returns>
+        /// <response code="200">Patient Model</response>
+        /// <response code = "400"> Bad request</response>
+        /// <response code="404">Not Found</response>
+        /// <response code="401">Unauthorized</response>
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [Produces("application/json")]
         [HttpGet("{patientId}")]
         public async Task<ActionResult<PatientDTO>> GetPatient(Guid patientId)
         {
@@ -67,6 +95,21 @@ namespace HospitalDataAPI.Controllers
                 return BadRequest(e.Message);
             }
         }
+
+        /// <summary>
+        /// Get Patients Name by Family Name
+        /// </summary>
+        /// <param name="lastName">Family Name Of The Patient </param>
+        /// <returns>Patients</returns>
+        /// <response code="200">Patients</response>
+        /// <response code = "400"> Bad request</response>
+        /// <response code="404">Not Found</response>
+        /// <response code="401">Unauthorized</response>
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [Produces("application/json")]
         [HttpGet("Lastname")]
         public ActionResult<IEnumerable<PatientDTO>> GetPatientByName([FromQueryAttribute] string lastName)
         {
@@ -82,6 +125,21 @@ namespace HospitalDataAPI.Controllers
                 return BadRequest(e.Message);
             }
         }
+
+        /// <summary>
+        /// Add Patient
+        /// </summary>
+        /// <param name="newPatient"> Create Model of the Patient Model</param>
+        /// <returns>Successful</returns>
+        /// <response code="200">Successful</response>
+        /// <response code = "400"> Bad request</response>
+        /// <response code="404">Not Found</response>
+        /// <response code="401">Unauthorized</response>
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [Produces("application/json")]
         [HttpPost]
         public async Task<ActionResult> AddPatient(PatientCreate newPatient) 
         {
@@ -99,19 +157,24 @@ namespace HospitalDataAPI.Controllers
         }
 
         /// <summary>
-        /// Update a patient Database.
+        /// Update Patient 
         /// </summary>
         /// <remarks>
         ///     </remarks>
         ///     <param name="patientId">Guid Id of the patient</param>
-        ///     <param name="updatePatient">Update Model of the patient Model</param>
+        ///     <param name="updatePatient">Update Model of the Patient Model</param>
         ///     <returns>An updated patient model</returns>
-        /// <response code="200">An updated patient model</response>
-        /// <response code="404">If the item is null</response>   
-        [HttpPut("{patientId}")]
+        /// <response code="200">Updated Patient Model</response>
+        /// <response code = "400"> Bad request</response>
+        /// <response code="404">Not Found</response>
+        /// <response code="401">Unauthorized</response>
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]            
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [Produces("application/json")]
+        [HttpPut("{patientId}")]
+       
         public async Task<ActionResult<PatientDTO>> UpdatePatient(Guid patientId,PatientUpdate updatePatient)
         {
             try

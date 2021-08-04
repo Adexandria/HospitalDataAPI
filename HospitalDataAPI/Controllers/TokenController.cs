@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using System.Net;
 using Swashbuckle.AspNetCore.Annotations;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.AspNetCore.Http;
 
 namespace HospitalDataAPI.Controllers
 {
@@ -24,9 +25,17 @@ namespace HospitalDataAPI.Controllers
         {
             this._credential = _credential;
         }
-
+        /// <summary>
+        /// Get AccessToken
+        /// </summary>
+        /// <returns>Access Token</returns>
+        /// <response code="200">Token Model</response>
+        /// <response code = "400"> Bad request</response>
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [Produces("application/json")]
         [HttpGet]
-        public ActionResult<TokenDTO> AccessToken() 
+        public ActionResult<TokenDTO> GetAccessToken() 
         {
             try
             {

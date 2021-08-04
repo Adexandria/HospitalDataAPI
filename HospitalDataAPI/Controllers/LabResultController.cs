@@ -5,6 +5,7 @@ using HospitalDataAPI.Model.PatientModel;
 using HospitalDataAPI.Service;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 using System;
@@ -36,6 +37,20 @@ namespace HospitalDataAPI.Controllers
             this._test = _test;
         }
 
+        /// <summary>
+        /// Get Patient Lab Results
+        /// </summary>
+        /// <param name="patientId">Patient Id</param>
+        /// <returns> Patient Lab Results</returns>
+        /// <response code="200">Patient Lab Results</response>
+        /// <response code = "400"> Bad request</response>
+        /// <response code="404">Not Found</response>
+        /// <response code="401">Unauthorized</response>
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [Produces("application/json")]
         [HttpGet]
         public ActionResult<IEnumerable<LabResultDTO>> GetPatientResults(Guid patientId) 
         {
@@ -56,8 +71,23 @@ namespace HospitalDataAPI.Controllers
                 return BadRequest(e.Message);
             }
         }
+        /// <summary>
+        /// Get Patient Lab Result By Lab Test Id
+        /// </summary>
+        /// <param name="patientId">Patient Id</param>
+        /// <param name="testId"> Lab Result Id</param>
+        /// <returns>Patient Lab Results</returns> 
+        /// <response code="200">Patient Lab Results</response>
+        /// <response code = "400"> Bad request</response>
+        /// <response code="404">Not Found</response>
+        /// <response code="401">Unauthorized</response>
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [Produces("application/json")]
         [HttpGet("testId")]
-        public ActionResult<IEnumerable<LabResultDTO>> GetPatientResultByTestId(Guid patientId, [FromQuery]Guid testId) 
+        public ActionResult<IEnumerable<LabResultDTO>> GetPatientResultsByTestId(Guid patientId, [FromQuery]Guid testId) 
         {
             try
             {
@@ -81,8 +111,24 @@ namespace HospitalDataAPI.Controllers
                 return BadRequest(e.Message);
             }
         }
+
+        /// <summary>
+        /// Get Patient Lab Result By Lab Result Id
+        /// </summary>
+        /// <param name="patientId">Patient Id</param>
+        /// <param name="resultId">Lab Result Id</param>
+        /// <returns>Patient Lab Result</returns>
+        /// <response code="200">Patient Lab Result</response>
+        /// <response code = "400"> Bad request</response>
+        /// <response code="404">Not Found</response>
+        /// <response code="401">Unauthorized</response>
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [Produces("application/json")]
         [HttpGet("{resultId}")]
-        public async Task<ActionResult<LabResultDTO>>GetPatientById(Guid patientId,Guid resultId)
+        public async Task<ActionResult<LabResultDTO>>GetPatientResultById(Guid patientId,Guid resultId)
         {
             try
             {
@@ -101,6 +147,22 @@ namespace HospitalDataAPI.Controllers
                 return BadRequest(e.Message);
             }
         }
+
+        /// <summary>
+        /// Add Patient Lab Result
+        /// </summary>
+        /// <param name="patientId">patient id</param>
+        /// <param name="labResult">Create Model of Lab Result Model</param>
+        /// <returns>Successful</returns>
+        /// <response code="200">Successful</response>
+        /// <response code = "400"> Bad request</response>
+        /// <response code="404">Not Found</response>
+        /// <response code="401">Unauthorized</response>
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [Produces("application/json")]
         [HttpPost]
         public async Task<ActionResult> AddPatientResult(Guid patientId,LabResultCreate labResult)
         {
@@ -126,6 +188,23 @@ namespace HospitalDataAPI.Controllers
                 return BadRequest(e.Message);
             }
         }
+
+        /// <summary>
+        /// Update Patient Lab Result 
+        /// </summary>
+        /// <param name="patientId">Patient Id</param>
+        /// <param name="testId">Test Id</param>
+        /// <param name="labResult">Update Model of Lab Result Model</param>
+        /// <returns>Updated Patient Lab Result</returns>
+        /// <response code="200">Patient Lab Result</response>
+        /// <response code = "400"> Bad request</response>
+        /// <response code="404">Not Found</response>
+        /// <response code="401">Unauthorized</response>
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [Produces("application/json")]
         [HttpPut("{testId}")]
         public async Task<ActionResult<LabResultDTO>> UpdatePatientResult(Guid patientId,Guid testId,LabResultUpdate labResult) 
         {
@@ -147,7 +226,7 @@ namespace HospitalDataAPI.Controllers
                     return NotFound("Lab result doesn't exist");
                 }
                 LabResult newLabResult = _mapper.Map<LabResult>(labResult);
-                LabResult updatedLabResult = await _result.UpdateLabResultId(patientId,testId,newLabResult);
+                LabResult updatedLabResult = await _result.UpdateLabResultId(patientId,newLabResult);
                 LabResultDTO mappedResult = _mapper.Map<LabResultDTO>(updatedLabResult);
                 return Ok(mappedResult);
             }
@@ -157,6 +236,22 @@ namespace HospitalDataAPI.Controllers
                 return BadRequest(e.Message);
             }
         }
+
+        /// <summary>
+        /// Delete Lab Result By Lab Result Id
+        /// </summary>
+        /// <param name="patientId">Patient Id</param>
+        /// <param name="resultId">Lab Result Id</param>
+        /// <returns>Successful</returns>
+        /// <response code="200">Successful</response>
+        /// <response code = "400"> Bad request</response>
+        /// <response code="404">Not Found</response>
+        /// <response code="401">Unauthorized</response>
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [Produces("application/json")]
         [HttpDelete("{resultId}")]
         public async Task<ActionResult> DeletePatientResult(Guid patientId,Guid resultId)
         {

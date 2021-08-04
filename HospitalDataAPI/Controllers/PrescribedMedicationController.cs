@@ -10,7 +10,6 @@ using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 
@@ -35,7 +34,20 @@ namespace HospitalDataAPI.Controllers
             this._medication = _medication;
             this._patient = _patient;
         }
-
+        /// <summary>
+        /// Get Patient Prescribed Medications
+        /// </summary>
+        /// <param name="patientId"> Patient Id</param>
+        /// <returns>Prescribed Medications</returns>
+        /// <response code="200">Prescribed Medications </response>
+        /// <response code = "400"> Bad request</response>
+        /// <response code="404">Not Found</response>
+        /// <response code="401">Unauthorized</response>
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [Produces("application/json")]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<PrescribedMedsDTO>>> GetPatientMeds(Guid patientId) 
         {
@@ -58,6 +70,22 @@ namespace HospitalDataAPI.Controllers
             }
             
         }
+
+        /// <summary>
+        /// Get Patient Prescribed Medication by Id
+        /// </summary>
+        /// <param name="patientId">Patient Id</param>
+        /// <param name="prescribedId">Prescribed Medication Id</param>
+        /// <returns>Prescribed Medication Model</returns>
+        /// <response code="200">Prescribed Medication Model</response>
+        /// <response code = "400"> Bad request</response>
+        /// <response code="404">Not Found</response>
+        /// <response code="401">Unauthorized</response>
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [Produces("application/json")]
         [HttpGet("{prescribedId}")]
         public async Task<ActionResult<PrescribedMedsDTO>> GetPatientMedById(Guid patientId,Guid prescribedId)
         {
@@ -85,6 +113,22 @@ namespace HospitalDataAPI.Controllers
             }
 
         }
+
+        /// <summary>
+        /// Add Patient Prescribed Medication
+        /// </summary>
+        /// <param name="patientId">Patient Model</param>
+        /// <param name="patientMedication">Create Model for Prescribed Medication Model</param>
+        /// <returns>Successful</returns>
+        /// <response code="200">Successful</response>
+        /// <response code = "400"> Bad request</response>
+        /// <response code="404">Not Found</response>
+        /// <response code="401">Unauthorized</response>
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [Produces("application/json")]
         [HttpPost]
         public async Task<ActionResult> AddPatientMedication (Guid patientId,PrescribedMedsCreate patientMedication) 
         {
@@ -112,6 +156,21 @@ namespace HospitalDataAPI.Controllers
 
         }
 
+        /// <summary>
+        /// Update Patient  Prescribed Medication
+        /// </summary>
+        /// <param name="patientId">Patient Id</param>
+        /// <param name="patientMedication">Update Model of Prescribed Medication</param>
+        /// <returns> Prescribed Medication </returns>
+        /// <response code="200">Updated Patient Medication Model</response>
+        /// <response code = "400"> Bad request</response>
+        /// <response code="404">Not Found</response>
+        /// <response code="401">Unauthorized</response>
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [Produces("application/json")]
         [HttpPut]
         public async Task<ActionResult<PrescribedMedsDTO>> UpdatePatientmedication (Guid patientId,PrescribedMedsUpdate patientMedication)
         {
