@@ -102,20 +102,20 @@ namespace HospitalDataAPI.Service
                 throw e;
             }
         }
-        public async  Task<LabResult> UpdateLabResultId(Guid patientId, Guid testId, LabResult updateLabResult)
+        public async  Task<LabResult> UpdateLabResultId(Guid patientId,LabResult updateLabResult)
         {
             try
             {
                 if (patientId == null) throw new NullReferenceException(nameof(patientId));
                 if (updateLabResult == null) throw new NullReferenceException(nameof(updateLabResult));
 
-                var currentLabResult = await GetLabResultById(patientId, testId);
+                var currentLabResult = await GetLabResultById(patientId, updateLabResult.ResultId);
                
                 Update(currentLabResult, updateLabResult);
                 dataDb.Entry(currentLabResult).State = EntityState.Detached;
                 dataDb.Entry(updateLabResult).State = EntityState.Modified;
                 await Save();
-                return await GetLabResultById(patientId, testId);
+                return await GetLabResultById(patientId, updateLabResult.ResultId);
             }
             catch (Exception e)
             {

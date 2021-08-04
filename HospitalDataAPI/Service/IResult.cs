@@ -12,7 +12,7 @@ namespace HospitalDataAPI.Service
         IEnumerable<LabResult> GetLabResultsByTestId(Guid patientId, Guid testId);
         Task<LabResult> GetLabResultById(Guid patientId, Guid resultId);
         Task AddLabResultId(Guid patientId,LabResult newLabResult);
-        Task<LabResult> UpdateLabResultId(Guid patientId, Guid testId, LabResult updateLabResult);
+        Task<LabResult> UpdateLabResultId(Guid patientId,LabResult updateLabResult);
         Task DeleteLabResultById(Guid patientId, Guid testId);
     }
 }
