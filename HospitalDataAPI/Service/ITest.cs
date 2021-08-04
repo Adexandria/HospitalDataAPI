@@ -10,7 +10,7 @@ namespace HospitalDataAPI.Service
         //LabTest
         IEnumerable<LabTest> GetLabTestsById(Guid patientId);
         Task<LabTest> GetLabTestById(Guid patientId, Guid labTestId);
-        Task<LabTest> GetLabTestByCode(Guid patientId, string code);
+        IEnumerable<LabTest> GetLabTestByCode(Guid patientId, string code);
         Task AddLabTestById(Guid patientId,LabTest newLabTest);
         Task<LabTest> UpdateLabTestById(Guid patientId, LabTest updateLabTest);
 

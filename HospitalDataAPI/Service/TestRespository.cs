@@ -16,14 +16,14 @@ namespace HospitalDataAPI.Service
         }
 
         //LabTest
-        public async Task<LabTest> GetLabTestByCode(Guid patientId, string code)
+        public IEnumerable<LabTest> GetLabTestByCode(Guid patientId, string code)
         {
             try
             {
                 if (patientId == null) throw new NullReferenceException(nameof(patientId));
                 if (string.IsNullOrWhiteSpace(code)) throw new NullReferenceException(nameof(code));
-                var labTest = await dataDb.LabTest.Where(s => s.PatientId == patientId).Where(s => s.Code.Code.StartsWith(code))
-                    .Include(s=>s.Patient).Include(s=>s.Category).Include(s=>s.Code).AsNoTracking().FirstOrDefaultAsync();
+                var labTest = dataDb.LabTest.Where(s => s.PatientId == patientId).Where(s => s.Code.Code.StartsWith(code))
+                    .Include(s => s.Patient).Include(s => s.Category).Include(s => s.Code).AsNoTracking();
                // if (labTest == null) throw new NullReferenceException(nameof(labTest));
                 return labTest;
             }
