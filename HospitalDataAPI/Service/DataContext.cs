@@ -2,11 +2,6 @@
 using HospitalDataAPI.Model.MedicationModel;
 using HospitalDataAPI.Model.PatientModel;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
 namespace HospitalDataAPI.Service
 {
     public class DataContext :DbContext

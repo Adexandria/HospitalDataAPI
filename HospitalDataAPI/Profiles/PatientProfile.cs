@@ -2,10 +2,7 @@
 using HospitalDataAPI.Model.DTO.Patients;
 using HospitalDataAPI.Model.PatientModel;
 using HospitalDataAPI.Service;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+
 
 namespace HospitalDataAPI.Profiles
 {
